@@ -1,5 +1,7 @@
 package com.nikolai.mynews.Controllers.Utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nikolai.mynews.Controllers.Models.NewsArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
 
@@ -28,7 +30,7 @@ public interface NewsArticleService {
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssz").create()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
 }

@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NewsArticleStreams {
 
-    private final static String API_KEY = "";
+    private final static String API_KEY = "fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J";
 
     public static Observable<TopStories> streamFetchNewsArticle() {
         NewsArticleService newsArticleService = NewsArticleService.retrofit.create(NewsArticleService.class);

@@ -3,6 +3,9 @@ package com.nikolai.mynews.Controllers.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+import java.util.List;
+
 public class NewsArticle {
     @SerializedName("section")
     @Expose
@@ -30,16 +33,29 @@ public class NewsArticle {
 
     @SerializedName("published_date")
     @Expose
-    private String
+    private Date
             published_date;
 
-    public NewsArticle(String section, String subsection, String title, String byline, String url, String published_date) {
+    @SerializedName("multimedia")
+    @Expose
+    private List<URL> multimedia;
+
+    public NewsArticle(String section, String subsection, String title, String byline, String url, Date published_date, List<URL> multimedia) {
         this.section = section;
         this.subsection = subsection;
         this.title = title;
         this.byline = byline;
         this.url = url;
         this.published_date = published_date;
+        this.multimedia = multimedia;
+    }
+
+    public List<URL> getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(List<URL> multimedia) {
+        this.multimedia = multimedia;
     }
 
     public String getSection() {
@@ -82,11 +98,11 @@ public class NewsArticle {
         this.url = url;
     }
 
-    public String getPublished_date() {
+    public Date getPublished_date() {
         return published_date;
     }
 
-    public void setPublished_date(String published_date) {
+    public void setPublished_date(Date published_date) {
         this.published_date = published_date;
     }
 
@@ -101,5 +117,3 @@ public class NewsArticle {
 
 
 }
-
-//https://api.nytimes.com/svc/topstories/v2/science.json?api-key=fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J

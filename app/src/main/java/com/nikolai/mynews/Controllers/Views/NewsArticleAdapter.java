@@ -43,7 +43,7 @@ public class NewsArticleAdapter extends RecyclerView.Adapter<NewsArticleViewHold
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.fragment_page_news_main_item, parent, false);
 
-        return new NewsArticleViewHolder(view);
+        return new NewsArticleViewHolder(view, context);
     }
 
     // UPDATE VIEW HOLDER WITH A NEWSARTICLE

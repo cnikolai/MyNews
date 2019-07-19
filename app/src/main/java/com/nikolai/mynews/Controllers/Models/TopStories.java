@@ -3,6 +3,7 @@ package com.nikolai.mynews.Controllers.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class TopStories {
@@ -17,7 +18,7 @@ public class TopStories {
   private String section;
     @SerializedName("last_updated")
     @Expose
-  private String last_updated;
+  private Date last_updated;
     @SerializedName("num_results")
     @Expose
     private Integer num_results;
@@ -49,11 +50,11 @@ public class TopStories {
         this.section = section;
     }
 
-    public String getLast_updated() {
+    public Date getLast_updated() {
         return last_updated;
     }
 
-    public void setLast_updated(String last_updated) {
+    public void setLast_updated(Date last_updated) {
         this.last_updated = last_updated;
     }
 
