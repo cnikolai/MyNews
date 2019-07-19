@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.nikolai.mynews.R;
 
 /**
- * Created by Philippe on 17/11/2017.
+ * Created by Cynthia Nikolai on 7/11/2019.
  */
 
 public class MostPopularFragment extends Fragment {

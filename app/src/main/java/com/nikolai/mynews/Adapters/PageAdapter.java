@@ -9,7 +9,7 @@ import com.nikolai.mynews.Controllers.Fragments.BusinessFragment;
 import com.nikolai.mynews.Controllers.Fragments.MostPopularFragment;
 
 /**
- * Created by Philippe on 17/11/2017.
+ * Created by Cynthia Nikolai on 7/11/2019.
  */
 
 

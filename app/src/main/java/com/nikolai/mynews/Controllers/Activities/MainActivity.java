@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 // open search activity
                 break;
             case R.id.notifications:
-                // open notifications
+                // open notifications activity
                 break;
             case R.id.about:
                 //open about dialog
