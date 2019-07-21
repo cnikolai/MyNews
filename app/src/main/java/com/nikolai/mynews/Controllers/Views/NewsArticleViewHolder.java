@@ -39,6 +39,8 @@ public class NewsArticleViewHolder extends RecyclerView.ViewHolder implements Vi
     @BindView(R.id.fragment_main_item_title) TextView textView;
     //@BindView(R.id.fragment_main_item_website) TextView texViewWebsite;
     @BindView(R.id.fragment_main_item_date) TextView textViewDate;
+    @BindView(R.id.fragment_main_item_section) TextView textViewSection;
+    ;
     @BindView(R.id.fragment_main_item_image) ImageView imageView;
     @BindView(R.id.fragment_main_item_delete) ImageButton imageButton;
 
@@ -57,16 +59,19 @@ public class NewsArticleViewHolder extends RecyclerView.ViewHolder implements Vi
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher_round)
                 .error(R.mipmap.ic_launcher_round);
+        String ending = "";
 
         if (NewsArticle.getMultimedia().size() == 0) {
             NewsArticle.getMultimedia().add(new URL("http://1111aaaa"));
         }
+        if (NewsArticle.getSubsection() != "") {
+            ending = ">"+NewsArticle.getSubsection();
+        }
 
         this.textView.setText(NewsArticle.getTitle());
         String strDate = dateFormat.format(NewsArticle.getPublished_date());
-        //Log.d(TAG, strDate);
         this.textViewDate.setText(strDate);
-        //this.texViewWebsite.setText(githubUser.getHtmlUrl());
+        this.textViewSection.setText(NewsArticle.getSection() + ending);
         Glide.with(context).load(NewsArticle.getMultimedia().get(0).getUrl()).apply(options).into(imageView);
         this.imageButton.setOnClickListener(this);
 

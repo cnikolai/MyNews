@@ -1,6 +1,8 @@
 package com.nikolai.mynews.Controllers.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.NewsArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
 import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
@@ -27,6 +32,8 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 /**
  * Created by Cynthia Nikolai on 7/11/2019.
  */
@@ -36,6 +43,7 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
     public static TopStoriesFragment newInstance() {
         return (new TopStoriesFragment());
     }
+    private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +53,7 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
         this.configureSwipeRefreshLayout();
         this.configureOnClickRecyclerView();
         this.executeHttpRequestWithRetrofit();
+        this.mContext = this.getContext();
 
 //        mProgressDialog = new ProgressDialog(TopStoriesFragment.newInstance().getContext());
 //        mProgressDialog.setMessage("Loading....");
@@ -83,15 +92,20 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
         .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                NewsArticle NewsArticles = adapter.getArticle(position);
-                Toast.makeText(getContext(), "You clicked on user : ", Toast.LENGTH_SHORT).show();
+                NewsArticle newsArticle = adapter.getArticle(position);
+                Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, WebViewActivity.class);
+                //EditText editText = (EditText) findViewById(R.id.editText);
+                //String message = editText.getText().toString();
+                intent.putExtra("URL", "http://www.google.com");
+                startActivity(intent);
             }
         });
     }
 
     public void onClickDeleteButton(int position) {
-        NewsArticle NewsArticles = adapter.getArticle(position);
-        Toast.makeText(getContext(), "You are trying to delete user : ", Toast.LENGTH_SHORT).show();
+        NewsArticle newsArticle = adapter.getArticle(position);
+        Toast.makeText(getContext(), "You are trying to delete article : ", Toast.LENGTH_SHORT).show();
     }
 
     // -----------------

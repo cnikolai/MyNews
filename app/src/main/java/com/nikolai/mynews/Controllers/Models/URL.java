@@ -27,3 +27,5 @@ public class URL {
 //    private String caption;
 
 }
+
+//https://api.nytimes.com/svc/topstories/v2/business.json?api-key=fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J

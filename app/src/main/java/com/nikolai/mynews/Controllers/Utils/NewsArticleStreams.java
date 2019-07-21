@@ -20,7 +20,7 @@ public class NewsArticleStreams {
 
     public static Observable<TopStories> streamFetchNewsArticle() {
         NewsArticleService newsArticleService = NewsArticleService.retrofit.create(NewsArticleService.class);
-        return newsArticleService.getAllNewsArticles("science", API_KEY)
+        return newsArticleService.getAllNewsArticles("business", API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
