@@ -1,5 +1,6 @@
 package com.nikolai.mynews.Controllers.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
@@ -26,6 +27,8 @@ public class WebViewActivity extends AppCompatActivity {
 
             webview = (WebView) findViewById(R.id.webview);
             webview.setWebViewClient(new WebViewClient());
+            Intent intent = getIntent();
+            url = intent.getStringExtra("URL");
             webview.loadUrl(url);
         }
 

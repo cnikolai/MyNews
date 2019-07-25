@@ -6,25 +6,19 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
-public class TopStories {
+public class SearchArticles {
     @SerializedName("status")
     @Expose
   private String status;
     @SerializedName("copyright")
     @Expose
   private String copyright;
-    @SerializedName("section")
-    @Expose
-  private String section;
-    @SerializedName("last_updated")
-    @Expose
-  private Date last_updated;
-    @SerializedName("num_results")
+    @SerializedName("meta")
     @Expose
     private Integer num_results;
     @SerializedName("results")
     @Expose
-    private List<TopStoriesArticle> results;
+    private List<SearchArticlesArticle> results;
 
     public String getStatus() {
         return status;
@@ -42,22 +36,6 @@ public class TopStories {
         this.copyright = copyright;
     }
 
-    public String getSection() {
-        return section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
-    }
-
-    public Date getLast_updated() {
-        return last_updated;
-    }
-
-    public void setLast_updated(Date last_updated) {
-        this.last_updated = last_updated;
-    }
-
     public Integer getNum_results() {
         return num_results;
     }
@@ -66,11 +44,11 @@ public class TopStories {
         this.num_results = num_results;
     }
 
-    public List<TopStoriesArticle> getResults() {
+    public List<SearchArticlesArticle> getResults() {
         return results;
     }
 
-    public void setResults(List<TopStoriesArticle> results) {
+    public void setResults(List<SearchArticlesArticle> results) {
         this.results = results;
     }
 }

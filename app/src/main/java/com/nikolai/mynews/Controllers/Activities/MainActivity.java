@@ -1,5 +1,6 @@
 package com.nikolai.mynews.Controllers.Activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.search:
                 // open search activity
+                Intent intent = new Intent(MainActivity.this.getBaseContext(), SearchActivity.class);
+                intent.putExtra("title", "Search");
+                startActivity(intent);
                 break;
             case R.id.notifications:
                 // open notifications activity

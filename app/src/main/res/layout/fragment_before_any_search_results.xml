@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nikolai.mynews.Controllers.Fragments.BusinessFragment"
+    tools:context="com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment"
     android:gravity="center"
     android:background="#ADCEB7">
 
     <TextView
-        android:id="@+id/fragment_page_param_title"
+        android:id="@+id/fragment_search_results_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dip"
@@ -17,6 +17,6 @@
         android:textStyle="bold"
         android:textColor="#fff"
         android:textAlignment="center"
-        android:text="... en terminant par afficher les paramètres de l'application là ? "/>
+        android:text="click on the search icon to begin a search"/>
 
 </LinearLayout>

@@ -1,9 +1,8 @@
 package com.nikolai.mynews.Controllers.Utils;
 
-import com.nikolai.mynews.Controllers.Models.NewsArticle;
+import com.nikolai.mynews.Controllers.Models.SearchArticles;
 import com.nikolai.mynews.Controllers.Models.TopStories;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -14,13 +13,13 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
-public class NewsArticleStreams {
+public class ArticleSearchArticleStreams {
 
     private final static String API_KEY = "fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J";
 
-    public static Observable<TopStories> streamFetchNewsArticle() {
-        NewsArticleService newsArticleService = NewsArticleService.retrofit.create(NewsArticleService.class);
-        return newsArticleService.getAllNewsArticles("business", API_KEY)
+    public static Observable<SearchArticles> streamFetchNewsArticle() {
+        ArticleSearchArticleService articleSearchArticleService = ArticleSearchArticleService.retrofit.create(ArticleSearchArticleService.class);
+        return articleSearchArticleService.getAllNewsArticles("","","hamster","relevance", API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

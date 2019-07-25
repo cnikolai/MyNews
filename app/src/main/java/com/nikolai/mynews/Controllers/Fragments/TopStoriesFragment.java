@@ -11,17 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
-import com.nikolai.mynews.Controllers.Models.NewsArticle;
+import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
 import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
-import com.nikolai.mynews.Controllers.Utils.NewsArticleStreams;
-import com.nikolai.mynews.Controllers.Views.NewsArticleAdapter;
+import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleStreams;
+import com.nikolai.mynews.Controllers.Views.TopStoriesArticleAdapter;
 import com.nikolai.mynews.R;
 
 import java.util.ArrayList;
@@ -32,13 +30,11 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 /**
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
-public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.Listener {
+public class TopStoriesFragment extends Fragment implements TopStoriesArticleAdapter.Listener {
 
     public static TopStoriesFragment newInstance() {
         return (new TopStoriesFragment());
@@ -55,6 +51,7 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
         this.executeHttpRequestWithRetrofit();
         this.mContext = this.getContext();
 
+        //TODO: come back to this
 //        mProgressDialog = new ProgressDialog(TopStoriesFragment.newInstance().getContext());
 //        mProgressDialog.setMessage("Loading....");
 //        mProgressDialog.show();
@@ -70,11 +67,11 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
 
     //FOR DATA
     private Disposable disposable;
-    private List<NewsArticle> NewsArticles;
-    private NewsArticleAdapter adapter;
+    private List<TopStoriesArticle> mTopStoriesArticles;
+    private TopStoriesArticleAdapter adapter;
     ProgressDialog mProgressDialog;
 
-      public TopStoriesFragment() { }
+    public TopStoriesFragment() { }
 
 
     @Override
@@ -92,19 +89,17 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
         .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                NewsArticle newsArticle = adapter.getArticle(position);
-                Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
+                TopStoriesArticle topStoriesArticle = adapter.getArticle(position);
+                //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, WebViewActivity.class);
-                //EditText editText = (EditText) findViewById(R.id.editText);
-                //String message = editText.getText().toString();
-                intent.putExtra("URL", "http://www.google.com");
+                intent.putExtra("URL", topStoriesArticle.getUrl());
                 startActivity(intent);
             }
         });
     }
 
     public void onClickDeleteButton(int position) {
-        NewsArticle newsArticle = adapter.getArticle(position);
+        TopStoriesArticle topStoriesArticle = adapter.getArticle(position);
         Toast.makeText(getContext(), "You are trying to delete article : ", Toast.LENGTH_SHORT).show();
     }
 
@@ -114,9 +109,9 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
 
     //TODO: come back to this
     private void configureRecyclerView(){
-        this.NewsArticles = new ArrayList<>();
+        this.mTopStoriesArticles = new ArrayList<>();
         // Create adapter passing in the sample user data
-        this.adapter = new NewsArticleAdapter(this.NewsArticles, Glide.with(this), this);
+        this.adapter = new TopStoriesArticleAdapter(this.mTopStoriesArticles, Glide.with(this), this);
         // Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // Set layout manager to position the items
@@ -138,7 +133,7 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
 
     //TODO: come back to this
     private void executeHttpRequestWithRetrofit(){
-        this.disposable = NewsArticleStreams.streamFetchNewsArticle().subscribeWith(new DisposableObserver<TopStories>() {
+        this.disposable = TopStoriesArticleStreams.streamFetchNewsArticle().subscribeWith(new DisposableObserver<TopStories>() {
           @Override
           public void onNext(TopStories topStories) {
                 updateUI(topStories);
@@ -163,8 +158,8 @@ public class TopStoriesFragment extends Fragment implements NewsArticleAdapter.L
 
     // TODO: come back to this
     private void updateUI(TopStories topStories){
-        this.NewsArticles.clear();
-        this.NewsArticles.addAll(topStories.getResults());
+        this.mTopStoriesArticles.clear();
+        this.mTopStoriesArticles.addAll(topStories.getResults());
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }

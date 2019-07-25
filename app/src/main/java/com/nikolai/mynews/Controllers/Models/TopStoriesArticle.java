@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
-public class NewsArticle {
+public class TopStoriesArticle {
     @SerializedName("section")
     @Expose
     private String section;
@@ -40,7 +40,7 @@ public class NewsArticle {
     @Expose
     private List<URL> multimedia;
 
-    public NewsArticle(String section, String subsection, String title, String byline, String url, Date published_date, List<URL> multimedia) {
+    public TopStoriesArticle(String section, String subsection, String title, String byline, String url, Date published_date, List<URL> multimedia) {
         this.section = section;
         this.subsection = subsection;
         this.title = title;

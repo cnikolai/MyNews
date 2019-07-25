@@ -1,14 +1,9 @@
 package com.nikolai.mynews.Controllers.Utils;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nikolai.mynews.Controllers.Models.NewsArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
 
-import java.util.List;
-
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,7 +15,7 @@ import retrofit2.http.Query;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
-public interface NewsArticleService {
+public interface TopStoriesArticleService {
 
     public static final String BASE_URL = "https://api.nytimes.com/svc/topstories/v2/";
 
