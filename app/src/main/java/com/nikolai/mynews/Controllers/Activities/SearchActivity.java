@@ -1,8 +1,10 @@
 package com.nikolai.mynews.Controllers.Activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
@@ -159,5 +161,10 @@ public class SearchActivity extends AppCompatActivity {
                 // set Fragment Arguments
         SearchResultsFragment fragobj = new SearchResultsFragment();
         fragobj.setArguments(bundle);
+        //called stop activity and passes values back to calling activity
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(RESULT_OK,intent);
+        finish();
     }
 }

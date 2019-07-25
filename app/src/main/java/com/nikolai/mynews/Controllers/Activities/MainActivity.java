@@ -2,7 +2,6 @@ package com.nikolai.mynews.Controllers.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +12,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.nikolai.mynews.Adapters.PageAdapter;
+import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
 import com.nikolai.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ViewPager pager;
+    private PageAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureViewPagerAndTabs(){
         //Get ViewPager from layout
-        ViewPager pager = (ViewPager)findViewById(R.id.activity_main_viewpager);
+        pager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         //Set Adapter PageAdapter and glue it together
-        pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
+        pagerAdapter = new PageAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
+        //pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
 
         //Get TabLayout from layout
         TabLayout tabs= (TabLayout)findViewById(R.id.activity_main_tabs);
@@ -69,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 // open search activity
                 Intent intent = new Intent(MainActivity.this.getBaseContext(), SearchActivity.class);
                 intent.putExtra("title", "Search");
-                startActivity(intent);
+                //1001 = unique identifier
+                startActivityForResult(intent, 1001);
                 break;
             case R.id.notifications:
                 // open notifications activity
@@ -82,5 +88,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((resultCode == RESULT_OK) && requestCode == 1001) {
+            Toast.makeText(this, "Inside Main Activity onActivityResult", Toast.LENGTH_SHORT).show();
+            pager.setCurrentItem(2);
+            SearchResultsFragment searchResultsFragment = (SearchResultsFragment) pagerAdapter.instantiateItem(pager,2);
+            searchResultsFragment.setSearch(data.getExtras());
+        }
+
     }
 }

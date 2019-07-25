@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class SearchResultsFragment extends Fragment implements ArticleSearchArticleAdapter.Listener {
 
+    private static final String TAG = "SearchResultsFragment";
     private Context mContext;
     public static SearchResultsFragment newInstance() {
         return (new SearchResultsFragment());
@@ -47,34 +49,33 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
         View view;
         Toast.makeText(getContext(), "Inside Fragment", Toast.LENGTH_LONG).show();
         //if (arguments != null && arguments.containsKey("edttext")) {
-        if (arguments != null) {
             Toast.makeText(getContext(), "Inside Fragment", Toast.LENGTH_SHORT).show();
-            Boolean chkArts = getArguments().getBoolean("chkArts");
-            Boolean chkBusiness = getArguments().getBoolean("chkBusiness");
-            Boolean chkEntrepreneurs = getArguments().getBoolean("chkEntrepreneurs");
-            Boolean chkPolitics = getArguments().getBoolean("chkPolitics");
-            Boolean chkSports = getArguments().getBoolean("chkSports");
-            Boolean chkTravel = getArguments().getBoolean("chkTravel");
-            String mBeginDateEditText = getArguments().getString("mBeginDateEditText");
-            String mEndDateEditText = getArguments().getString("mEndDateEditText");
-            String searchqueryterm = getArguments().getString("searchqueryterm");
+//            Boolean chkArts = getArguments().getBoolean("chkArts");
+//            Boolean chkBusiness = getArguments().getBoolean("chkBusiness");
+//            Boolean chkEntrepreneurs = getArguments().getBoolean("chkEntrepreneurs");
+//            Boolean chkPolitics = getArguments().getBoolean("chkPolitics");
+//            Boolean chkSports = getArguments().getBoolean("chkSports");
+//            Boolean chkTravel = getArguments().getBoolean("chkTravel");
+//            String mBeginDateEditText = getArguments().getString("mBeginDateEditText");
+//            String mEndDateEditText = getArguments().getString("mEndDateEditText");
+//            String searchqueryterm = getArguments().getString("searchqueryterm");
 
             view = inflater.inflate(R.layout.fragment_search_news_main, container, false);
             ButterKnife.bind(this, view);
             this.configureRecyclerView();
             this.configureSwipeRefreshLayout();
             this.configureOnClickRecyclerView();
-            this.executeHttpRequestWithRetrofit();
+            //this.executeHttpRequestWithRetrofit();
             this.mContext = this.getContext();
 
             //TODO: come back to this
 //        mProgressDialog = new ProgressDialog(SearchArticlesFragment.newInstance().getContext());
 //        mProgressDialog.setMessage("Loading....");
 //        mProgressDialog.show();
-        }
-        else {
-            view = inflater.inflate(R.layout.fragment_before_any_search_results, container, false);
-        }
+
+            //TODO: come back to when screen first is initialized before any search occurs
+            //view = inflater.inflate(R.layout.fragment_before_any_search_results, container, false);
+
             return view;
     }
 
@@ -177,9 +178,16 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
 
     // TODO: come back to this
     private void updateUI(SearchArticles searchArticles){
+        Log.d(TAG, "insde searcharticles: ");
+        int temp = searchArticles.getNum_results();
+        Log.d(TAG, "updateUI: "+temp);
         this.mSearchArticlesArticles.clear();
         this.mSearchArticlesArticles.addAll(searchArticles.getResults());
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void setSearch(Bundle extras) {
+        this.executeHttpRequestWithRetrofit();
     }
 }
