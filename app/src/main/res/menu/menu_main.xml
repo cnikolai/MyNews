@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/search">
+    </item>
+    <item
+        android:id="@+id/notifications"
+        app:showAsAction="never"
+        android:title="@string/notifications">
+    </item>
+    <item
+        android:id="@+id/help"
+        app:showAsAction="never"
+        android:title="@string/help">
+    </item>
+    <item
+        android:id="@+id/about"
+        app:showAsAction="never"
+        android:title="@string/about">
+    </item>
+</menu>
