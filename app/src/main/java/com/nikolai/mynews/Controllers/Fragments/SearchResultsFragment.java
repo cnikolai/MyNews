@@ -97,6 +97,8 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
     // FOR DESIGN
     @BindView(R.id.fragment_search_news_main_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.no_search_results)
+    View noSearchResultsView;
     @BindView(R.id.fragment_search_news_main_swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -200,6 +202,13 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
         Log.d(TAG, "inside updateUI: ");
         int temp = searchArticles.getResponse().getDocs().size();
         Log.d(TAG, "updateUI: "+temp);
+        if (searchArticles.getResponse().getDocs().size() == 0) {
+            noSearchResultsView.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setVisibility(View.GONE);
+        } else {
+            noSearchResultsView.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
+        }
         this.mSearchArticlesArticles.clear();
         this.mSearchArticlesArticles.addAll(searchArticles.getResponse().getDocs());
         adapter.notifyDataSetChanged();

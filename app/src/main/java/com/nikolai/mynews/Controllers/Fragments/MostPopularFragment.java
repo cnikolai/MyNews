@@ -57,9 +57,9 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
         this.executeHttpRequestWithRetrofit();
         this.mContext = this.getContext();
 
-        //mProgressDialog = new ProgressDialog(this.getContext());
-        //mProgressDialog.setMessage("Loading....");
-        //mProgressDialog.show();
+//        mProgressDialog = new ProgressDialog(this.getContext());
+//        mProgressDialog.setMessage("Loading....");
+//        mProgressDialog.show();
 
         return view;
     }

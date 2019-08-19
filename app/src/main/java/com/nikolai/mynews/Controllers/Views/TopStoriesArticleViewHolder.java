@@ -2,6 +2,7 @@ package com.nikolai.mynews.Controllers.Views;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -79,7 +80,7 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
         TopStoriesArticleAdapter.Listener callback = callbackWeakRef.get();
         if (callback != null) {
             callback.onClickDeleteButton(getAdapterPosition());
-            callback.changeArticleColor(getAdapterPosition(), this.textView, context);
+            //callback.changeArticleColor(getAdapterPosition(), this.textView, context);
         }
         //textView.setTextColor(ContextCompat.getColor(context, R.color.orange));
         //view.setBackgroundColor(ContextCompat.getColor(context, R.color.orange));

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment"
     android:gravity="center"
-    android:background="#ADCEB7">
+    >
 
     <TextView
         android:id="@+id/fragment_search_results_title"
@@ -15,8 +15,8 @@
         android:layout_margin="20dip"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textAlignment="center"
-        android:text="click on the search icon to begin a search"/>
+        android:text="There were no search results. Please try searching again with a different keyword!"/>
 
 </LinearLayout>

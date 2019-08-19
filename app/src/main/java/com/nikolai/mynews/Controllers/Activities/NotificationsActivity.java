@@ -2,6 +2,7 @@ package com.nikolai.mynews.Controllers.Activities;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -80,6 +81,8 @@ public class NotificationsActivity extends AppCompatActivity {
                 Log.v("Switch State=", ""+isChecked);
                 if (isChecked) {
                     if (validateSearch()) {
+                        Toast.makeText(NotificationsActivity.this, "Notification set",
+                                Toast.LENGTH_SHORT).show();
                         addNotification();
                         Snackbar snackbar = Snackbar
                                 .make(mConstraintLayout, "Notifications Set", Snackbar.LENGTH_LONG);
@@ -107,7 +110,7 @@ public class NotificationsActivity extends AppCompatActivity {
         if (chkArts.isChecked() == false && chkBusiness.isChecked() == false && chkEntrepreneurs.isChecked() == false && chkPolitics.isChecked() == false && chkSports.isChecked() == false && chkTravel.isChecked() == false && chkScience.isChecked() == false && chkTechnology.isChecked() == false && chkWorld.isChecked() == false) {
             Toast.makeText(NotificationsActivity.this, "Please select at least one search category",
                 Toast.LENGTH_SHORT).show();
-        return false;
+            return false;
         }
         return true;
     }
@@ -133,8 +136,8 @@ public class NotificationsActivity extends AppCompatActivity {
         //builder.setContentIntent(contentIntent);
 
         // Add as notification
-        //NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        //manager.notify(0, builder.build());
+//        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        manager.notify(0, builder.build());
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
