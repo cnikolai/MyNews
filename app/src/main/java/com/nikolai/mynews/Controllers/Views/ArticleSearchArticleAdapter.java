@@ -1,11 +1,12 @@
 package com.nikolai.mynews.Controllers.Views;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.nikolai.mynews.Controllers.Models.SearchArticlesArticle;

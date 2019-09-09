@@ -3,9 +3,6 @@ package com.nikolai.mynews.Controllers.Activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +14,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
 import com.nikolai.mynews.R;
 
@@ -43,14 +43,6 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Access the support ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(SearchActivity.this, "End of Activity!", Toast.LENGTH_LONG).show();
-//                finish();
-//            }
-//          });
 
         //calendar spinner
         mBeginDateEditText =(EditText) findViewById(R.id.begin_date);
