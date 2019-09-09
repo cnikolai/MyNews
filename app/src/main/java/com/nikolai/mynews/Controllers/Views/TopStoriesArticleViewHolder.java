@@ -6,20 +6,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.nikolai.mynews.ArticleBeenRead;
+import com.nikolai.mynews.Controllers.Fragments.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Models.URL;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -52,10 +51,10 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
     }
 
     public void updateWithNewsArticle(TopStoriesArticle TopStoriesArticle, TopStoriesArticleAdapter.Listener callback) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
+//        RequestOptions options = new RequestOptions()
+//                .centerCrop()
+//                .placeholder(R.mipmap.ic_launcher_round)
+//                .error(R.mipmap.ic_launcher_round);
         String ending = "";
 
         if (TopStoriesArticle.getMultimedia().size() == 0) {
@@ -79,7 +78,9 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
         String temp = TopStoriesArticle.getSection() + ending;
         this.textViewSection.setText(temp);
         this.textViewSection.setTypeface(null, Typeface.BOLD);
-        Glide.with(context).load(TopStoriesArticle.getMultimedia().get(0).getUrl()).apply(options).into(imageView);
+        Picasso.get().load(TopStoriesArticle.getMultimedia().get(0).getUrl())
+//            .apply(options)
+            .into(imageView);
 
         this.callbackWeakRef = new WeakReference<TopStoriesArticleAdapter.Listener>(callback);
     }

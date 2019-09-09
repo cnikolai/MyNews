@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
@@ -25,6 +23,7 @@ import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
 import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleStreams;
 import com.nikolai.mynews.Controllers.Views.TopStoriesArticleAdapter;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +127,7 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
     private void configureRecyclerView(){
         this.mTopStoriesArticles = new ArrayList<>();
         // Create adapter passing in the sample user data
-        this.adapter = new TopStoriesArticleAdapter(this.mTopStoriesArticles, Glide.with(this), this);
+        this.adapter = new TopStoriesArticleAdapter(this.mTopStoriesArticles, Picasso.get(), this);
         // Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // Set layout manager to position the items
