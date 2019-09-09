@@ -10,12 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.bumptech.glide.Glide;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.SearchArticles;
 import com.nikolai.mynews.Controllers.Models.SearchArticlesArticle;
@@ -23,10 +17,15 @@ import com.nikolai.mynews.Controllers.Utils.ArticleSearchArticleStreams;
 import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
 import com.nikolai.mynews.Controllers.Views.ArticleSearchArticleAdapter;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -149,7 +148,7 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
     private void configureRecyclerView(){
         this.mSearchArticlesArticles = new ArrayList<>();
         // Create adapter passing in the sample user data
-        this.adapter = new ArticleSearchArticleAdapter(this.mSearchArticlesArticles, Glide.with(this), this);
+        this.adapter = new ArticleSearchArticleAdapter(this.mSearchArticlesArticles, Picasso.get(), this);
         // Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // Set layout manager to position the items

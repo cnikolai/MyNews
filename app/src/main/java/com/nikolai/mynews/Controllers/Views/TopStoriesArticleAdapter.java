@@ -7,17 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.RequestManager;
-import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Cynthia Nikolai on 7/11/2019.
@@ -41,12 +37,12 @@ public class TopStoriesArticleAdapter extends RecyclerView.Adapter<TopStoriesArt
     // FOR DATA
     private final List<TopStoriesArticle> mTopStoriesArticles;
     //private final List<Integer> mTopStoriesArticlesThatHaveBeenRead = new ArrayList<>();
-    private final RequestManager glide;
+    private final Picasso picasso;
 
     // CONSTRUCTOR
-    public TopStoriesArticleAdapter(List<TopStoriesArticle> topStoriesArticles, RequestManager glide, Listener callback) {
+    public TopStoriesArticleAdapter(List<TopStoriesArticle> topStoriesArticles, Picasso picasso, Listener callback) {
         this.mTopStoriesArticles = topStoriesArticles;
-        this.glide = glide;
+        this.picasso = picasso;
         this.callback = callback;
     }
 

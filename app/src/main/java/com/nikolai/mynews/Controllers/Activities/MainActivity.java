@@ -7,20 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
+import com.google.android.material.tabs.TabLayout;
+import com.nikolai.mynews.Adapters.PageAdapter;
+import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
+import com.nikolai.mynews.R;
+
+import java.util.concurrent.TimeUnit;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-
-import com.google.android.material.tabs.TabLayout;
-import com.nikolai.mynews.Adapters.PageAdapter;
-import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
-import com.nikolai.mynews.R;
-import com.nikolai.mynews.Workers.ArticleWorker;
-
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 

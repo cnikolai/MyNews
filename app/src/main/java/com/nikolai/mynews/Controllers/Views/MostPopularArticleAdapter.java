@@ -7,16 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.RequestManager;
 import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
 import com.nikolai.mynews.R;
-
-import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Cynthia Nikolai on 7/11/2019.
@@ -36,12 +34,12 @@ public class MostPopularArticleAdapter extends RecyclerView.Adapter<MostPopularA
 
     // FOR DATA
     private final List<MostPopularArticle> mMostPopularArticles;
-    private final RequestManager glide;
+    private final Picasso picasso;
 
     // CONSTRUCTOR
-    public MostPopularArticleAdapter(List<MostPopularArticle> mostPopularArticles, RequestManager glide, Listener callback) {
+    public MostPopularArticleAdapter(List<MostPopularArticle> mostPopularArticles, Picasso picasso, Listener callback) {
         this.mMostPopularArticles = mostPopularArticles;
-        this.glide = glide;
+        this.picasso = picasso;
         this.callback = callback;
     }
 

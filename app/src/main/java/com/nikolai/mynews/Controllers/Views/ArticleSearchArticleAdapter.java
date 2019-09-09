@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.RequestManager;
 import com.nikolai.mynews.Controllers.Models.SearchArticlesArticle;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Cynthia Nikolai on 7/11/2019.
@@ -31,12 +31,12 @@ public class ArticleSearchArticleAdapter extends RecyclerView.Adapter<ArticleSea
 
     // FOR DATA
     private final List<SearchArticlesArticle> mSearchArticlesArticles;
-    private final RequestManager glide;
+    private final Picasso picasso;
 
     // CONSTRUCTOR
-    public ArticleSearchArticleAdapter(List<SearchArticlesArticle> SearchArticlesArticles, RequestManager glide, Listener callback) {
+    public ArticleSearchArticleAdapter(List<SearchArticlesArticle> SearchArticlesArticles, Picasso picasso, Listener callback) {
         this.mSearchArticlesArticles = SearchArticlesArticles;
-        this.glide = glide;
+        this.picasso = picasso;
         this.callback = callback;
     }
 
