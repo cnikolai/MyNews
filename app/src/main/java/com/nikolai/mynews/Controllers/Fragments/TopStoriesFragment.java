@@ -4,18 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
@@ -23,6 +23,7 @@ import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
 import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleStreams;
 import com.nikolai.mynews.Controllers.Views.TopStoriesArticleAdapter;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ import io.reactivex.observers.DisposableObserver;
 
 public class TopStoriesFragment extends Fragment implements TopStoriesArticleAdapter.Listener {
 
+    private TextView mTextView;
+
     public static TopStoriesFragment newInstance() {
         return (new TopStoriesFragment());
     }
@@ -52,6 +55,7 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
         this.configureOnClickRecyclerView();
         this.executeHttpRequestWithRetrofit();
         this.mContext = this.getContext();
+        //this.mTextView = findViewById(R.id.fragment_main_item_title);
 
 //        mProgressDialog = new ProgressDialog(this.getContext());
 //        mProgressDialog.setMessage("Loading....");
@@ -91,23 +95,29 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
             @Override
             public void onItemClicked(int position) {
                 TopStoriesArticle topStoriesArticle = adapter.getArticle(position);
-                //adapter.changeArticleColor(position, v,getContext());
+                ArticleBeenRead.getInstance().setArticleHasBeenRead(topStoriesArticle.getUrl());
+                //adapter.notifyDataSetChanged();
+                adapter.notifyItemChanged(position);
+                //changeArticleColor(position, mTextView ,mContext);
+                //adapter.changeArticleColor(position,getContext()));
                 //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, WebViewActivity.class);
                 intent.putExtra("URL", topStoriesArticle.getUrl());
                 startActivity(intent);
             }
         });
-    }
-
-    public void changeArticleColor(int position, TextView textview, Context context) {
-        textview.setTextColor((ContextCompat.getColor(context, R.color.orange)));
+        ;
     }
 
     public void onClickDeleteButton(int position) {
         TopStoriesArticle topStoriesArticle = adapter.getArticle(position);
         Toast.makeText(getContext(), "You are trying to delete article at position: "+position, Toast.LENGTH_SHORT).show();
         adapter.deleteArticle(position);
+    }
+
+    public void changeArticleColor(int position, TextView textview, Context context) {
+        //adapter.changeArticleColor(position, textview, context);
+        textview.setTextColor(ContextCompat.getColor(context, R.color.orange));
     }
 
     // -----------------
@@ -117,7 +127,7 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
     private void configureRecyclerView(){
         this.mTopStoriesArticles = new ArrayList<>();
         // Create adapter passing in the sample user data
-        this.adapter = new TopStoriesArticleAdapter(this.mTopStoriesArticles, Glide.with(this), this);
+        this.adapter = new TopStoriesArticleAdapter(this.mTopStoriesArticles, Picasso.get(), this);
         // Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // Set layout manager to position the items

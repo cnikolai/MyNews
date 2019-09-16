@@ -1,19 +1,18 @@
 package com.nikolai.mynews.Controllers.Views;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.nikolai.mynews.Controllers.Models.SearchArticlesArticle;
 import com.nikolai.mynews.Controllers.Models.URL;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,17 +37,19 @@ public class ArticleSearchArticleViewHolder extends RecyclerView.ViewHolder impl
     }
 
     public void updateWithNewsArticle(SearchArticlesArticle articleSearchArticle, ArticleSearchArticleAdapter.Listener callback) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
+//        RequestOptions options = new Picas()
+//                .centerCrop()
+//                .placeholder(R.mipmap.ic_launcher_round)
+//                .error(R.mipmap.ic_launcher_round);
 
         if (articleSearchArticle.getMultimedia().size() == 0) {
             articleSearchArticle.getMultimedia().add(new URL("http://www.google.com"));
         }
 
         this.textView.setText(articleSearchArticle.getSnippet());
-            Glide.with(context).load("https://static01.nyt.com/" + articleSearchArticle.getMultimedia().get(0).getUrl()).apply(options).into(imageView);
+            Picasso.get().load("https://static01.nyt.com/" + articleSearchArticle.getMultimedia().get(0).getUrl())
+//                .apply(options)
+                .into(imageView);
 
         this.callbackWeakRef = new WeakReference<ArticleSearchArticleAdapter.Listener>(callback);
     }

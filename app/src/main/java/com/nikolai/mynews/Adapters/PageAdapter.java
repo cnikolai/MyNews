@@ -1,13 +1,14 @@
 package com.nikolai.mynews.Adapters;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-import com.nikolai.mynews.Controllers.Fragments.TopStoriesFragment;
-import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
 import com.nikolai.mynews.Controllers.Fragments.MostPopularFragment;
+import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
+import com.nikolai.mynews.Controllers.Fragments.TopStoriesFragment;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 /**
  * Created by Cynthia Nikolai on 7/11/2019.

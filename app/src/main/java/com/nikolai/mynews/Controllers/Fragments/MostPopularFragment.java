@@ -4,17 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.MostPopular;
 import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
@@ -22,10 +17,15 @@ import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
 import com.nikolai.mynews.Controllers.Utils.MostPopularArticleStreams;
 import com.nikolai.mynews.Controllers.Views.MostPopularArticleAdapter;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -123,7 +123,7 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
         Log.d(TAG, "configureRecyclerView: inside");
         this.mMostPopularArticles = new ArrayList<>();
         // Create adapter passing in the sample user data
-        this.adapter = new MostPopularArticleAdapter(this.mMostPopularArticles, Glide.with(this), this);
+        this.adapter = new MostPopularArticleAdapter(this.mMostPopularArticles, Picasso.get(), this);
         // Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // Set layout manager to position the items

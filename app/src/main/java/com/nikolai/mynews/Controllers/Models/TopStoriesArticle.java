@@ -40,6 +40,8 @@ public class TopStoriesArticle {
     @Expose
     private List<URL> multimedia;
 
+    private String id;
+
     public TopStoriesArticle(String section, String subsection, String title, String byline, String url, Date published_date, List<URL> multimedia) {
         this.section = section;
         this.subsection = subsection;
@@ -48,6 +50,15 @@ public class TopStoriesArticle {
         this.url = url;
         this.published_date = published_date;
         this.multimedia = multimedia;
+        this.id = url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<URL> getMultimedia() {

@@ -2,16 +2,10 @@ package com.nikolai.mynews.Controllers.Activities;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +16,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.nikolai.mynews.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationsActivity extends AppCompatActivity {
 
@@ -78,11 +80,10 @@ public class NotificationsActivity extends AppCompatActivity {
         mNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.v("Switch State=", ""+isChecked);
+                Log.v("Switch State = ", ""+isChecked);
                 if (isChecked) {
                     if (validateSearch()) {
-                        Toast.makeText(NotificationsActivity.this, "Notification set",
-                                Toast.LENGTH_SHORT).show();
+                        createNotificationChannel();
                         addNotification();
                         Snackbar snackbar = Snackbar
                                 .make(mConstraintLayout, "Notifications Set", Snackbar.LENGTH_LONG);
@@ -128,14 +129,16 @@ public class NotificationsActivity extends AppCompatActivity {
                         .setSmallIcon(R.drawable.ic_menu_white_24dp)
                         .setContentTitle("My News Notification")
                         .setContentText("A New Article Has Been Released")
+                        .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        //Intent notificationIntent = new Intent(this, NotificationsActivity.class);
-        //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
-        //        PendingIntent.FLAG_UPDATE_CURRENT);
-        //builder.setContentIntent(contentIntent);
-
-        // Add as notification
+        //TODO: come back to this
+        Intent notificationIntent = new Intent(this, SearchActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+//
+//         //Add as notification
 //        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 //        manager.notify(0, builder.build());
 

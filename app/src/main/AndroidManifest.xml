@@ -37,7 +37,7 @@
             android:parentActivityName=".Controllers.Activities.NotificationsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Controllers.Activities.NotificationsActivity"/>
+                android:value=".Controllers.Activities.NotificationsActivity" />
         </activity>
     </application>
 

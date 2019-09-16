@@ -2,21 +2,20 @@ package com.nikolai.mynews.Controllers.Views;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,10 +45,10 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
     }
 
     public void updateWithNewsArticle(MostPopularArticle MostPopularArticle, MostPopularArticleAdapter.Listener callback) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
+//        RequestOptions options = new RequestOptions()
+//                .centerCrop()
+//                .placeholder(R.mipmap.ic_launcher_round)
+//                .error(R.mipmap.ic_launcher_round);
         String ending = "";
 
 
@@ -59,7 +58,9 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
         String temp = MostPopularArticle.getSection() + ending;
         this.textViewSection.setText(temp);
         this.textViewSection.setTypeface(null, Typeface.BOLD);
-        Glide.with(context).load(MostPopularArticle.getMedia().get(0).getMedia_metadata().get(0).getUrl()).apply(options).into(imageView);
+        Picasso.get().load(MostPopularArticle.getMedia().get(0).getMedia_metadata().get(0).getUrl())
+//            .apply(options)
+            .into(imageView);
 
         this.callbackWeakRef = new WeakReference<MostPopularArticleAdapter.Listener>(callback);
     }

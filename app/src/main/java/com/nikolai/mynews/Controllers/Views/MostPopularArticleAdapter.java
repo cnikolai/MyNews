@@ -1,17 +1,20 @@
 package com.nikolai.mynews.Controllers.Views;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.bumptech.glide.RequestManager;
 import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
 import com.nikolai.mynews.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Cynthia Nikolai on 7/11/2019.
@@ -20,6 +23,7 @@ import java.util.List;
 public class MostPopularArticleAdapter extends RecyclerView.Adapter<MostPopularArticleViewHolder> {
 
     private static final String TAG = "MostPopularArtAdapter";
+    private TextView mTextView;
 
     public interface Listener {
         void onClickDeleteButton(int position);
@@ -30,12 +34,12 @@ public class MostPopularArticleAdapter extends RecyclerView.Adapter<MostPopularA
 
     // FOR DATA
     private final List<MostPopularArticle> mMostPopularArticles;
-    private final RequestManager glide;
+    private final Picasso picasso;
 
     // CONSTRUCTOR
-    public MostPopularArticleAdapter(List<MostPopularArticle> mostPopularArticles, RequestManager glide, Listener callback) {
+    public MostPopularArticleAdapter(List<MostPopularArticle> mostPopularArticles, Picasso picasso, Listener callback) {
         this.mMostPopularArticles = mostPopularArticles;
-        this.glide = glide;
+        this.picasso = picasso;
         this.callback = callback;
     }
 
@@ -66,6 +70,11 @@ public class MostPopularArticleAdapter extends RecyclerView.Adapter<MostPopularA
     public MostPopularArticle getArticle(int position){
         Log.d(TAG, "getArticle: inside");
         return this.mMostPopularArticles.get(position);
+    }
+
+    public void changeArticleColor(int position, Context context) {
+        mTextView = (TextView) mTextView.findViewById(R.id.fragment_most_popular_item_title);
+        mTextView.setTextColor((ContextCompat.getColor(context, R.color.orange)));
     }
 
     public void deleteArticle(int position){

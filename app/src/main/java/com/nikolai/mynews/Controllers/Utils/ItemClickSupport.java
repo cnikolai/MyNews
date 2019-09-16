@@ -1,7 +1,8 @@
 package com.nikolai.mynews.Controllers.Utils;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Cynthia Nikolai on 7/11/2019.

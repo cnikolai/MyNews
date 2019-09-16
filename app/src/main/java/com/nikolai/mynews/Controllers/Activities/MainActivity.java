@@ -1,19 +1,24 @@
 package com.nikolai.mynews.Controllers.Activities;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.tabs.TabLayout;
 import com.nikolai.mynews.Adapters.PageAdapter;
 import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
 import com.nikolai.mynews.R;
+
+import java.util.concurrent.TimeUnit;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Configure ViewPager
         this.configureViewPagerAndTabs();
+        planWorker();
+    }
+
+    private void planWorker() {
+        WorkManager mWorkManager;
+        mWorkManager = WorkManager.getInstance(this.getApplicationContext());
+        mWorkManager.enqueue(new PeriodicWorkRequest.Builder(ArticleWorker.class, 1, TimeUnit.MINUTES).build());
     }
 
     private void configureViewPagerAndTabs(){
