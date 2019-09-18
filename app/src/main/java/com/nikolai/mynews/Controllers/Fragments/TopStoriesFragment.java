@@ -10,25 +10,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
+import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
-import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Models.TopStories;
+import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
 import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleStreams;
 import com.nikolai.mynews.Controllers.Views.TopStoriesArticleAdapter;
 import com.nikolai.mynews.R;
 import com.squareup.picasso.Picasso;
-import com.nikolai.mynews.ArticleBeenRead;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -152,6 +151,8 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
         this.disposable = TopStoriesArticleStreams.streamFetchNewsArticle().subscribeWith(new DisposableObserver<TopStories>() {
           @Override
           public void onNext(TopStories topStories) {
+              //using shared prefs
+              saveLastUpdate(mTopStories.getLast_updated());
                 updateUI(topStories);
             }
 
@@ -172,10 +173,16 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
     // -------------------
 
     private void updateUI(TopStories topStories){
+        if (topStories.getResults().isEmpty()) {
+
+        } else {
+
+        }
         this.mTopStoriesArticles.clear();
         this.mTopStoriesArticles.addAll(topStories.getResults());
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
         //mProgressDialog.cancel();
+
     }
 }
