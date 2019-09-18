@@ -23,5 +23,11 @@
         android:id="@+id/no_search_results"
         android:visibility="gone"
         tools:visibility="visible"
-        layout="@layout/fragment_before_any_search_results"></include>
+        layout="@layout/fragment_before_any_search_results" />
+
+    <include
+        android:id="@+id/initial"
+        android:visibility="gone"
+        tools:visibility="visible"
+        layout="@layout/initial" />
 </FrameLayout>

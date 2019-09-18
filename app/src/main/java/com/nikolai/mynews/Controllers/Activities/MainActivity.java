@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.nikolai.mynews.Adapters.PageAdapter;
 import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
 import com.nikolai.mynews.R;
+import com.nikolai.mynews.Workers.ArticleWorker;
 
 import java.util.concurrent.TimeUnit;
 
