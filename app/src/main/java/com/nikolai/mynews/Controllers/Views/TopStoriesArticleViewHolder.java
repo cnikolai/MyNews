@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nikolai.mynews.Controllers.Fragments.ArticleBeenRead;
+import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.Controllers.Models.URL;
 import com.nikolai.mynews.R;

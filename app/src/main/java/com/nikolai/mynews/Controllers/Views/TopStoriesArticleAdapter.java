@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.R;
 import com.squareup.picasso.Picasso;
+import com.nikolai.mynews.ArticleBeenRead;
 
 import java.util.List;
 

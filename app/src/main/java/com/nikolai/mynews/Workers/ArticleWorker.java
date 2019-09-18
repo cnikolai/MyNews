@@ -22,7 +22,7 @@ public class ArticleWorker extends Worker {
     public ArticleWorker(
             @NonNull Context appContext,
             @NonNull WorkerParameters workerParams) {
-        super(appContext, workerParams);
+            super(appContext, workerParams);
     }
 
     @NonNull

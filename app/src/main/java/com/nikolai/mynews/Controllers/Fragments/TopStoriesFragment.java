@@ -24,6 +24,7 @@ import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleStreams;
 import com.nikolai.mynews.Controllers.Views.TopStoriesArticleAdapter;
 import com.nikolai.mynews.R;
 import com.squareup.picasso.Picasso;
+import com.nikolai.mynews.ArticleBeenRead;
 
 import java.util.ArrayList;
 import java.util.List;
