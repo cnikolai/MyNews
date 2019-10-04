@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * creates a list of articles that have already been read, so that it can change colors when the user clicks on it.  
+ * creates a list of articles that have already been read, so that it can change colors when the user clicks on it.
  */
 public class ArticleBeenRead {
 

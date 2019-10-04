@@ -26,6 +26,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import static com.nikolai.mynews.Constants.NOTIFICATION_ID;
+
 /**
  * the layout for the notifcations and the search activity: the base layout is shared between the two views
  */
@@ -41,7 +43,6 @@ public class NotificationsActivity extends AppCompatActivity {
     private TextInputEditText mSearchQueryTerm;
     private String searchqueryterm;
     private Switch mNotificationsSwitch;
-    private final int notificationId = 1;
     private ConstraintLayout mConstraintLayout;
 
     @Override
@@ -147,7 +148,7 @@ public class NotificationsActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(notificationId, builder.build());
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
 
     }
 

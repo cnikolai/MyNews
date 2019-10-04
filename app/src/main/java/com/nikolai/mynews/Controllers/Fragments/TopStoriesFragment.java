@@ -3,6 +3,7 @@ package com.nikolai.mynews.Controllers.Fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,14 @@ import com.nikolai.mynews.Controllers.Utils.ItemClickSupport;
 import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleStreams;
 import com.nikolai.mynews.Controllers.Views.TopStoriesArticleAdapter;
 import com.nikolai.mynews.R;
+import com.nikolai.mynews.SharedPreferencesWrapper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,11 +47,18 @@ import io.reactivex.observers.DisposableObserver;
 public class TopStoriesFragment extends Fragment implements TopStoriesArticleAdapter.Listener {
 
     private TextView mTextView;
+    private SharedPreferencesWrapper sharedPreferencesWrapper;
 
     public static TopStoriesFragment newInstance() {
         return (new TopStoriesFragment());
     }
     private Context mContext;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedPreferencesWrapper = new SharedPreferencesWrapper(requireContext());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +70,7 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
         this.executeHttpRequestWithRetrofit();
         this.mContext = this.getContext();
         //this.mTextView = findViewById(R.id.fragment_main_item_title);
+
 
 //        mProgressDialog = new ProgressDialog(this.getContext());
 //        mProgressDialog.setMessage("Loading....");
@@ -155,7 +167,7 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
           @Override
           public void onNext(TopStories topStories) {
               //using shared prefs
-              saveLastUpdate(topStories.getLast_updated());
+              sharedPreferencesWrapper.saveLastUpdate(topStories.getLast_updated());
                 updateUI(topStories);
             }
 
@@ -188,4 +200,5 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
         //mProgressDialog.cancel();
 
     }
+
 }

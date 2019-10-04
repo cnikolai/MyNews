@@ -1,5 +1,6 @@
 package com.nikolai.mynews.Controllers.Fragments;
 
+import android.app.MediaRouteButton;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -91,7 +92,6 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
 //            mProgressDialog.setMessage("Loading....");
 //            mProgressDialog.show();
 
-            //TODO: come back to when screen first is initialized before any search occurs
             //view = inflater.inflate(R.layout.fragment_no_search_results, container, false);
 
             return view;
@@ -102,6 +102,8 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
     RecyclerView recyclerView;
     @BindView(R.id.no_search_results)
     View noSearchResultsView;
+    @BindView(R.id.initial_no_search_results)
+    View initialNoSearchResultsView;
     @BindView(R.id.fragment_search_news_main_swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -202,6 +204,7 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
     // -------------------
 
     private void updateUI(SearchArticles searchArticles){
+        initialNoSearchResultsView.setVisibility(View.GONE);
         Log.d(TAG, "inside updateUI: ");
         int temp = searchArticles.getResponse().getDocs().size();
         Log.d(TAG, "updateUI: "+temp);
