@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * An adapter that provides miscellaneous functionality in support of the recyclerview
+ */
 public class ArticleSearchArticleAdapter extends RecyclerView.Adapter<ArticleSearchArticleViewHolder> {
 
     private static final String TAG = "ArtSearchArtAdapter";

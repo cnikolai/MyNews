@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * a supplemental class for most popular articles - returns the meta-data about the articles
+ */
 public class media_metadata {
     @SerializedName("media-metadata")
     @Expose

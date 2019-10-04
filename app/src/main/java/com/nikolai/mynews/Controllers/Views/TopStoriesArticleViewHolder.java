@@ -26,6 +26,9 @@ import butterknife.ButterKnife;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Class that actually holds the articles in each row of the recyclerview
+ */
 public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private static final String TAG = TopStoriesArticleViewHolder.class.getSimpleName();

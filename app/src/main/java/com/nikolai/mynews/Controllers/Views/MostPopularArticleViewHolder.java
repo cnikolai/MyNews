@@ -23,6 +23,9 @@ import butterknife.ButterKnife;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Class that actually holds the articles in each row of the recyclerview
+ */
 public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);

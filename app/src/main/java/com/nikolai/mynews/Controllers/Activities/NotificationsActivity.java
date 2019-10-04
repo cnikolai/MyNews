@@ -26,6 +26,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+/**
+ * the layout for the notifcations and the search activity: the base layout is shared between the two views
+ */
 public class NotificationsActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "1";

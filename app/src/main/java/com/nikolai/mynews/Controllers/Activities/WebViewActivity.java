@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nikolai.mynews.R;
 
+/**
+ * enables one to view the article in a webview
+ */
 public class WebViewActivity extends AppCompatActivity {
 
         private WebView webview;

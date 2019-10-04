@@ -23,6 +23,9 @@ import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+/**
+ * elements to enable one to search the NY Times API
+ */
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchActivity";

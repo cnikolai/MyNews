@@ -5,6 +5,9 @@ import android.app.Activity;
 
 import com.nikolai.mynews.R;
 
+/**
+ * creates the view for notifications
+ */
 public class NotificationView extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState){

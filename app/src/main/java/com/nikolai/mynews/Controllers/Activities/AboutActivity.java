@@ -11,6 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nikolai.mynews.R;
 
+/**
+ * the about page
+ */
 public class AboutActivity extends AppCompatActivity {
 
     private TextView mTextView;

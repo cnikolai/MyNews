@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
-
+/**
+ * the top level api call to the NY Times Top Stories API - returns information on the actual articles themselves
+ */
 public class TopStoriesArticle {
     @SerializedName("section")
     @Expose

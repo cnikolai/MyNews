@@ -12,6 +12,9 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Retrieves all top stories from the NY Times API
+ */
 public class TopStoriesArticleStreams {
 
     private final static String API_KEY = "fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J";

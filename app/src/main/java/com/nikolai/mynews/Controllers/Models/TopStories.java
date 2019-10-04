@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * the top level API call - returns metadata on the articles returned
+ */
 public class TopStories {
     @SerializedName("status")
     @Expose

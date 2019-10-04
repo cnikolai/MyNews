@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * An adapter that provides miscellaneous functionality in support of the recyclerview
+ */
 public class MostPopularArticleAdapter extends RecyclerView.Adapter<MostPopularArticleViewHolder> {
 
     private static final String TAG = "MostPopularArtAdapter";

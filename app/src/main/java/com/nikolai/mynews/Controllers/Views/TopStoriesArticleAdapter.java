@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * An adapter that provides miscellaneous functionality in support of the recyclerview
+ */
 public class TopStoriesArticleAdapter extends RecyclerView.Adapter<TopStoriesArticleViewHolder> {
 
     private static final String TAG = TopStoriesArticleAdapter.class.getSimpleName();

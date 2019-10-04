@@ -21,6 +21,9 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+/**
+ * this class contains the main menu items for the toolbar
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";

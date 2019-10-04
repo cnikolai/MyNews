@@ -27,6 +27,9 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+/**
+ * A worker class that provides new notificaitons to the user if a new article is released
+ */
 public class ArticleWorker extends Worker {
 
     public static final String TAG = ArticleWorker.class.getSimpleName();

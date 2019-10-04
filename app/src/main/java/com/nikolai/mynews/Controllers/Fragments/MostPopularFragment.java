@@ -35,6 +35,9 @@ import io.reactivex.observers.DisposableObserver;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Creates a recycler view for the most popular news articles.  Calls an HTTP request with retrofit to generate the articles for the recycler view
+ */
 public class MostPopularFragment extends Fragment implements MostPopularArticleAdapter.Listener {
 
     private static final String TAG = "MostPopularFragment";

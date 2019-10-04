@@ -15,6 +15,9 @@ import retrofit2.http.Query;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Uses retrofit, gson, and the API address and key to retrieve articles
+ */
 public interface TopStoriesArticleService {
 
     String BASE_URL = "https://api.nytimes.com/svc/topstories/v2/";

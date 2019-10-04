@@ -14,7 +14,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
-
+/**
+ * The page that first displays when we start up the program.  There are three main "tabs"
+ */
 public class PageAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = "FragmentPagerAdapter";
@@ -23,6 +25,7 @@ public class PageAdapter extends FragmentPagerAdapter {
         super(mgr);
     }
 
+    //there are three main tabs
     @Override
     public int getCount() {
         return(3);

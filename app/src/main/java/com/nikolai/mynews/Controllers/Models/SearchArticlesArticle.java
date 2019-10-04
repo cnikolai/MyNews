@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * the top level api call to the NY Times Search Articles API - returns information on the actual articles themselves
+ */
 public class SearchArticlesArticle {
 
     public String getSnippet() {

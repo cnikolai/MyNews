@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import static com.nikolai.mynews.Constants.CHANNEL_ID;
 import static com.nikolai.mynews.Constants.DELAY_TIME_MILLIS;
 
+/**
+ * A supplemental class for the article worker class that actually creates the notifications
+ */
 final class WorkerUtils {
     private static final String TAG = WorkerUtils.class.getSimpleName();
 
@@ -70,69 +73,4 @@ final class WorkerUtils {
             Log.d(TAG, e.getMessage());
         }
     }
-
-    //@WorkerThread
-//    static Bitmap blurBitmap(@NonNull Bitmap bitmap,
-//                             @NonNull Context applicationContext) {
-//
-//        RenderScript rsContext = null;
-//        try {
-//
-//            // Create the output bitmap
-//            Bitmap output = Bitmap.createBitmap(
-//                    bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-//
-//            // Blur the image
-//            rsContext = RenderScript.create(applicationContext, RenderScript.ContextType.DEBUG);
-//            Allocation inAlloc = Allocation.createFromBitmap(rsContext, bitmap);
-//            Allocation outAlloc = Allocation.createTyped(rsContext, inAlloc.getType());
-//            ScriptIntrinsicBlur theIntrinsic =
-//                    ScriptIntrinsicBlur.create(rsContext, Element.U8_4(rsContext));
-//            theIntrinsic.setRadius(10.f);
-//            theIntrinsic.setInput(inAlloc);
-//            theIntrinsic.forEach(outAlloc);
-//            outAlloc.copyTo(output);
-//
-//            return output;
-//        } finally {
-//            if (rsContext != null) {
-//                rsContext.finish();
-//            }
-//        }
-   // }
-
-    /**
-     * Writes bitmap to a temporary file and returns the Uri for the file
-     * @param applicationContext Application context
-     * @param bitmap Bitmap to write to temp file
-     * @return Uri for temp file with bitmap
-     * @throws FileNotFoundException Throws if bitmap file cannot be found
-     */
-//    static Uri writeBitmapToFile(
-//            @NonNull Context applicationContext,
-//            @NonNull Bitmap bitmap) throws FileNotFoundException {
-//
-//        String name = String.format("blur-filter-output-%s.png", UUID.randomUUID().toString());
-//        File outputDir = new File(applicationContext.getFilesDir(), Constants.OUTPUT_PATH);
-//        if (!outputDir.exists()) {
-//            outputDir.mkdirs(); // should succeed
-//        }
-//        File outputFile = new File(outputDir, name);
-//        FileOutputStream out = null;
-//        try {
-//            out = new FileOutputStream(outputFile);
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* ignored for PNG */, out);
-//        } finally {
-//            if (out != null) {
-//                try {
-//                    out.close();
-//                } catch (IOException ignore) {
-//                }
-//            }
-//        }
-//        return Uri.fromFile(outputFile);
-//    }
-
-//    private WorkerUtils() {
-//    }WorkerUtils
 }

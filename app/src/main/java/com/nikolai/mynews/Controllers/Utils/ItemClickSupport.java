@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * A supplemental class to provide item click support for items clicked in the recycler view
+ */
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;

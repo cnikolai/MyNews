@@ -14,6 +14,9 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Retrieves all items from user search from the NY Times API
+ */
 public class ArticleSearchArticleStreams {
     private final static String TAG = "ArtSearchArtStreams";
     private final static String API_KEY = "fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J";

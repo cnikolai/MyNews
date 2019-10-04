@@ -37,6 +37,9 @@ import io.reactivex.observers.DisposableObserver;
  * Created by Cynthia Nikolai on 7/11/2019.
  */
 
+/**
+ * Creates a recycler view for the top stories news articles.  Calls an HTTP request with retrofit to generate the articles for the recycler view
+ */
 public class TopStoriesFragment extends Fragment implements TopStoriesArticleAdapter.Listener {
 
     private TextView mTextView;

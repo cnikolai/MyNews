@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * the top level api call to the NY Times Most Popular API
+ */
 public class MostPopularArticle {
     @SerializedName("section")
     @Expose

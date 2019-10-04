@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * the top level API call - returns metadata on the articles returned
+ */
 public class MostPopular {
     @SerializedName("status")
     @Expose
