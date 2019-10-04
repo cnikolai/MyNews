@@ -24,5 +24,5 @@
     <string name="notifications">Notifications</string>
     <string name="help">Help</string>
     <string name="about">About</string>
-    <string name="detailed_notification">Hi, Your Detailed notification view goes here....</string>
+    <string name="detailed_notification">A new news article is available</string>
 </resources>

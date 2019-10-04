@@ -132,7 +132,6 @@ public class NotificationsActivity extends AppCompatActivity {
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        //TODO: come back to this
         Intent notificationIntent = new Intent(this, SearchActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);

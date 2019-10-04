@@ -152,7 +152,7 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
           @Override
           public void onNext(TopStories topStories) {
               //using shared prefs
-              saveLastUpdate(mTopStories.getLast_updated());
+              saveLastUpdate(topStories.getLast_updated());
                 updateUI(topStories);
             }
 

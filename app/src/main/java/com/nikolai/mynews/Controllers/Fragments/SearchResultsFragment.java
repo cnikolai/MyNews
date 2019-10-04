@@ -89,7 +89,7 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
 //            mProgressDialog.show();
 
             //TODO: come back to when screen first is initialized before any search occurs
-            //view = inflater.inflate(R.layout.fragment_before_any_search_results, container, false);
+            //view = inflater.inflate(R.layout.fragment_no_search_results, container, false);
 
             return view;
     }
