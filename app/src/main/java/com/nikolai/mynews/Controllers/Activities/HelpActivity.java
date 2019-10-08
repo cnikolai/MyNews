@@ -42,7 +42,7 @@ public class HelpActivity extends AppCompatActivity {
             }
         });
 
-        mTextView = (TextView) findViewById(R.id.help_txt);
+        mTextView = findViewById(R.id.help_txt);
         mTextView.setText("Contact: Cynthia Nikolai \n\n Telephone Number: 389-283-2842");
     }
 

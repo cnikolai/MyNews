@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "inside onCreate: ");
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Access the support ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureViewPagerAndTabs(){
         //Get ViewPager from layout
-        pager = (ViewPager) findViewById(R.id.activity_main_viewpager);
+        pager = findViewById(R.id.activity_main_viewpager);
         //Set Adapter PageAdapter and glue it together
         pagerAdapter = new PageAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
 
         //Get TabLayout from layout
-        TabLayout tabs= (TabLayout)findViewById(R.id.activity_main_tabs);
+        TabLayout tabs= findViewById(R.id.activity_main_tabs);
         //Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
         //Design purpose. Tabs have the same width

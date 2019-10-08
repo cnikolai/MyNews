@@ -121,7 +121,6 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
                 startActivity(intent);
             }
         });
-        ;
     }
 
     public void onClickDeleteButton(int position) {

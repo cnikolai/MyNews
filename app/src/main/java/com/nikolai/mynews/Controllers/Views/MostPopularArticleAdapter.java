@@ -76,7 +76,7 @@ public class MostPopularArticleAdapter extends RecyclerView.Adapter<MostPopularA
     }
 
     public void changeArticleColor(int position, Context context) {
-        mTextView = (TextView) mTextView.findViewById(R.id.fragment_most_popular_item_title);
+        mTextView = mTextView.findViewById(R.id.fragment_most_popular_item_title);
         mTextView.setTextColor((ContextCompat.getColor(context, R.color.orange)));
     }
 

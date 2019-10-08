@@ -43,13 +43,13 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Access the support ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //calendar spinner
-        mBeginDateEditText =(EditText) findViewById(R.id.begin_date);
+        mBeginDateEditText = findViewById(R.id.begin_date);
         mBeginDateEditText.setInputType(InputType.TYPE_NULL);
         mBeginDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         //calendar spinner
-        mEndDateEditText =(EditText) findViewById(R.id.end_date);
+        mEndDateEditText = findViewById(R.id.end_date);
         mEndDateEditText.setInputType(InputType.TYPE_NULL);
         mEndDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,23 +94,23 @@ public class SearchActivity extends AppCompatActivity {
                 picker.show();
             }
         });
-        mNotificationsSwitch = (Switch) findViewById(R.id.notifications_switch);
+        mNotificationsSwitch = findViewById(R.id.notifications_switch);
         mNotificationsSwitch.setVisibility(View.GONE);
         addListenerOnButton();
     }
 
     private void addListenerOnButton() {
 
-        chkArts = (CheckBox) findViewById(R.id.arts);
-        chkBusiness = (CheckBox) findViewById(R.id.business);
-        chkEntrepreneurs = (CheckBox) findViewById(R.id.entrepreneurs);
-        chkPolitics = (CheckBox) findViewById(R.id.politics);
-        chkSports = (CheckBox) findViewById(R.id.sports);
-        chkTravel = (CheckBox) findViewById(R.id.travel);
-        chkScience = (CheckBox) findViewById(R.id.science);
-        chkTechnology = (CheckBox) findViewById(R.id.technology);
-        chkWorld = (CheckBox) findViewById(R.id.world);
-        btnSearch = (Button) findViewById(R.id.search_button);
+        chkArts = findViewById(R.id.arts);
+        chkBusiness = findViewById(R.id.business);
+        chkEntrepreneurs = findViewById(R.id.entrepreneurs);
+        chkPolitics = findViewById(R.id.politics);
+        chkSports = findViewById(R.id.sports);
+        chkTravel = findViewById(R.id.travel);
+        chkScience = findViewById(R.id.science);
+        chkTechnology = findViewById(R.id.technology);
+        chkWorld = findViewById(R.id.world);
+        btnSearch = findViewById(R.id.search_button);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
 
@@ -139,7 +139,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private boolean validateSearch() {
-        mSearchQueryTerm = (TextInputEditText) findViewById(R.id.search_query_term);
+        mSearchQueryTerm = findViewById(R.id.search_query_term);
         searchqueryterm = mSearchQueryTerm.getText().toString().trim();
         if (searchqueryterm.isEmpty()) {
             Toast.makeText(SearchActivity.this, "Please enter a search term",

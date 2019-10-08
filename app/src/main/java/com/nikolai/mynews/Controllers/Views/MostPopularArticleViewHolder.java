@@ -37,7 +37,6 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
     //@BindView(R.id.fragment_most_popular_item_website) TextView texViewWebsite;
     @BindView(R.id.fragment_most_popular_item_date) TextView textViewDate;
     @BindView(R.id.fragment_most_popular_item_section) TextView textViewSection;
-    ;
     @BindView(R.id.fragment_most_popular_item_image) ImageView imageView;
     //@BindView(R.id.fragment_most_popular_item_delete) ImageButton imageButton;
 

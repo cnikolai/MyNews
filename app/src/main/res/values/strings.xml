@@ -25,4 +25,5 @@
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="detailed_notification">A new news article is available</string>
+    <string name="there_are_no_search_results_please_try_searching">There are no search results. Please try searching!</string>
 </resources>

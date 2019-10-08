@@ -54,32 +54,32 @@ public class NotificationsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // hide unwanted components from view
-        mBeginDateViewText =(TextView) findViewById(R.id.begin_date_txt);
-        mEndDateViewText =(TextView) findViewById(R.id.end_date_txt);
-        mBeginDateEditText =(EditText) findViewById(R.id.begin_date);
-        mEndDateEditText =(EditText) findViewById(R.id.end_date);
-        btnSearch = (Button) findViewById(R.id.search_button);
+        mBeginDateViewText = findViewById(R.id.begin_date_txt);
+        mEndDateViewText = findViewById(R.id.end_date_txt);
+        mBeginDateEditText = findViewById(R.id.begin_date);
+        mEndDateEditText = findViewById(R.id.end_date);
+        btnSearch = findViewById(R.id.search_button);
         mBeginDateViewText.setVisibility(View.GONE);
         mEndDateViewText.setVisibility(View.GONE);
         mBeginDateEditText.setVisibility(View.GONE);
         mEndDateEditText.setVisibility(View.GONE);
         btnSearch.setVisibility(View.GONE);
-        mNotificationsSwitch = (Switch) findViewById(R.id.notifications_switch);
+        mNotificationsSwitch = findViewById(R.id.notifications_switch);
 
-        chkArts = (CheckBox) findViewById(R.id.arts);
-        chkBusiness = (CheckBox) findViewById(R.id.business);
-        chkEntrepreneurs = (CheckBox) findViewById(R.id.entrepreneurs);
-        chkPolitics = (CheckBox) findViewById(R.id.politics);
-        chkSports = (CheckBox) findViewById(R.id.sports);
-        chkTravel = (CheckBox) findViewById(R.id.travel);
-        chkScience = (CheckBox) findViewById(R.id.science);
-        chkTechnology = (CheckBox) findViewById(R.id.technology);
-        chkWorld = (CheckBox) findViewById(R.id.world);
+        chkArts = findViewById(R.id.arts);
+        chkBusiness = findViewById(R.id.business);
+        chkEntrepreneurs = findViewById(R.id.entrepreneurs);
+        chkPolitics = findViewById(R.id.politics);
+        chkSports = findViewById(R.id.sports);
+        chkTravel = findViewById(R.id.travel);
+        chkScience = findViewById(R.id.science);
+        chkTechnology = findViewById(R.id.technology);
+        chkWorld = findViewById(R.id.world);
 
         //createNotificationChannel();
 
         //final RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
-        mConstraintLayout = (ConstraintLayout) findViewById(R.id.constraint_layout);
+        mConstraintLayout = findViewById(R.id.constraint_layout);
 
         mNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -105,7 +105,7 @@ public class NotificationsActivity extends AppCompatActivity {
     }
 
     private boolean validateSearch() {
-        mSearchQueryTerm = (TextInputEditText) findViewById(R.id.search_query_term);
+        mSearchQueryTerm = findViewById(R.id.search_query_term);
         searchqueryterm = mSearchQueryTerm.getText().toString().trim();
         if (searchqueryterm.isEmpty()) {
             Toast.makeText(NotificationsActivity.this, "Please enter a search term",

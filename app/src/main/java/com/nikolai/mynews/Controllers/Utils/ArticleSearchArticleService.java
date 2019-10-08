@@ -19,7 +19,6 @@ import retrofit2.http.Query;
  */
 public interface ArticleSearchArticleService {
 
-    //TODO: what if there are no results?
     String BASE_URL = "https://api.nytimes.com/";
 
     //try with browser / retrofit

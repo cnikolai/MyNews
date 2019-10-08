@@ -42,7 +42,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
-        mTextView = (TextView) findViewById(R.id.about_txt);
+        mTextView = findViewById(R.id.about_txt);
         mTextView.setText("My News \n\n Version 1.1 \n\n By Cynthia Nikolai");
     }
 

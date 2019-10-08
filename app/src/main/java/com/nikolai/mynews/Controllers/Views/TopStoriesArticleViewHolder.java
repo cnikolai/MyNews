@@ -39,7 +39,6 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
     //@BindView(R.id.fragment_main_item_website) TextView texViewWebsite;
     @BindView(R.id.fragment_main_item_date) TextView textViewDate;
     @BindView(R.id.fragment_main_item_section) TextView textViewSection;
-    ;
     @BindView(R.id.fragment_main_item_image) ImageView imageView;
     //@BindView(R.id.fragment_main_item_delete) ImageButton imageButton;
 
@@ -92,17 +91,5 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
     @Override
     public void onClick(View view) {
         TopStoriesArticleAdapter.Listener callback = callbackWeakRef.get();
-        if (callback != null) {
-            //callback.onClickDeleteButton(getAdapterPosition());
-            //callback.changeArticleColor(getAdapterPosition(), this.textView, context);
-            //callback.addToReadQueue(getAdapterPosition());
-        }
-        //this.textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        //view.setBackgroundColor(ContextCompat.getColor(context, R.color.orange));
-        //ArticleBeenRead.getInstance().setArticleHasBeenRead(topStoriesArticle.getId());
-    }
-
-    public TextView getTextView() {
-        return textView;
     }
 }
