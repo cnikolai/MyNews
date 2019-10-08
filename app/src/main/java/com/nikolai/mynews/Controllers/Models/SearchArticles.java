@@ -19,27 +19,7 @@ public class SearchArticles {
     @Expose
     private SearchArticleResponse response;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCopyright() {
-        return copyright;
-    }
-
-    public void setCopyright(String copyright) {
-        this.copyright = copyright;
-    }
-
     public SearchArticleResponse getResponse() {
         return response;
-    }
-
-    public void setResponse(SearchArticleResponse results) {
-        this.response = results;
     }
 }

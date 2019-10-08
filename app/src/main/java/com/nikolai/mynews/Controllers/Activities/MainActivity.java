@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "End of Activity!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -121,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if ((resultCode == RESULT_OK) && requestCode == 1001) {
             Log.d(TAG, "onActivityResult: inside Main Activity onActivityResult search intent");
-            //Toast.makeText(this, "Inside Main Activity onActivityResult", Toast.LENGTH_SHORT).show();
             pager.setCurrentItem(2);
             SearchResultsFragment searchResultsFragment = (SearchResultsFragment) pagerAdapter.instantiateItem(pager,2);
             searchResultsFragment.setSearch(data.getExtras());
@@ -137,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             if ((resultCode == RESULT_OK) && requestCode == 1002) {
                 Log.d(TAG, "onActivityResult: inside Main Activity onActivityResult notification intent");
-                //Toast.makeText(this, "Inside Main Activity onActivityResult", Toast.LENGTH_SHORT).show();
                 pager.setCurrentItem(2);
                 SearchResultsFragment searchResultsFragment = (SearchResultsFragment) pagerAdapter.instantiateItem(pager,2);
                 searchResultsFragment.setSearch(data.getExtras());

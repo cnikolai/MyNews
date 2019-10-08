@@ -3,14 +3,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
-android:padding="20dip"
-    >
-<!--<TextView android:text="WebView" android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:id="@+id/textview"-->
-<!--android:textSize="35dp"-->
-<!--android:layout_alignParentTop="true"-->
-<!--android:layout_centerHorizontal="true" />-->
+android:padding="20dip">
 
 <LinearLayout
     android:layout_width="wrap_content"
@@ -48,13 +41,6 @@ android:padding="20dip"
                 android:gravity="end"
                 android:textSize="16sp" />
 
-            <!--<ImageButton-->
-            <!--android:id="@+id/fragment_main_item_delete"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_gravity="top"-->
-            <!--android:layout_marginRight="16dp"-->
-            <!--android:background="@android:drawable/ic_delete" />-->
         </LinearLayout>
         <TextView
             android:id="@+id/fragment_most_popular_item_title"

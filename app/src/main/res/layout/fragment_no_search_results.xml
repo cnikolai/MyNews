@@ -16,6 +16,6 @@
         android:textSize="25sp"
         android:textColor="#000"
         android:textAlignment="center"
-        android:text="There were no search results. Please try searching again with a different keyword!"/>
+        android:text="@string/there_were_no_search_results_please_try_searching_again_with_a_different_keyword"/>
 
 </LinearLayout>

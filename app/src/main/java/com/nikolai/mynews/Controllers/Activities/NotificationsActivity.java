@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.nikolai.mynews.R;
+import com.nikolai.mynews.SharedPreferencesWrapper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -44,6 +46,7 @@ public class NotificationsActivity extends AppCompatActivity {
     private String searchqueryterm;
     private Switch mNotificationsSwitch;
     private ConstraintLayout mConstraintLayout;
+    SharedPreferencesWrapper sharedPreferencesWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class NotificationsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        sharedPreferencesWrapper = new SharedPreferencesWrapper(this);
+
 
         // hide unwanted components from view
         mBeginDateViewText = findViewById(R.id.begin_date_txt);
@@ -65,6 +70,8 @@ public class NotificationsActivity extends AppCompatActivity {
         mEndDateEditText.setVisibility(View.GONE);
         btnSearch.setVisibility(View.GONE);
         mNotificationsSwitch = findViewById(R.id.notifications_switch);
+        mNotificationsSwitch.setChecked(sharedPreferencesWrapper.getSaveSwitchState());
+        Log.v("Switch State := ", ""+sharedPreferencesWrapper.getSaveSwitchState());
 
         chkArts = findViewById(R.id.arts);
         chkBusiness = findViewById(R.id.business);
@@ -76,9 +83,6 @@ public class NotificationsActivity extends AppCompatActivity {
         chkTechnology = findViewById(R.id.technology);
         chkWorld = findViewById(R.id.world);
 
-        //createNotificationChannel();
-
-        //final RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
         mConstraintLayout = findViewById(R.id.constraint_layout);
 
         mNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -86,19 +90,21 @@ public class NotificationsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.v("Switch State = ", ""+isChecked);
                 if (isChecked) {
+                    sharedPreferencesWrapper.saveSwitchState(isChecked); //using shared prefs
                     if (validateSearch()) {
                         createNotificationChannel();
                         addNotification();
-                        Snackbar snackbar = Snackbar
-                                .make(mConstraintLayout, "Notifications Set", Snackbar.LENGTH_LONG);
-                        snackbar.show();
                     }
                     else {
                         //make switch false
                         mNotificationsSwitch.setChecked(false);
+                        sharedPreferencesWrapper.saveSwitchState(false); //using shared prefs
                     }
                 }
-
+                else {
+                    mNotificationsSwitch.setChecked(false);
+                    sharedPreferencesWrapper.saveSwitchState(false); //using shared prefs
+                }
             }
 
         });
@@ -140,10 +146,6 @@ public class NotificationsActivity extends AppCompatActivity {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
-//
-//         //Add as notification
-//        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        manager.notify(0, builder.build());
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 

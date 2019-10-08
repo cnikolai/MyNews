@@ -69,5 +69,3 @@ public class ArticleSearchArticleStreams {
         return facet_string;
     }
 }
-
-//https://api.nytimes.com/svc/search/v2/articlesearch.json?q=hamster&fq=news_desk:(%22Arts%22)&api-key=fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J

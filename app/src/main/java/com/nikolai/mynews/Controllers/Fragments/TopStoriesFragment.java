@@ -3,7 +3,6 @@ package com.nikolai.mynews.Controllers.Fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.nikolai.mynews.SharedPreferencesWrapper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -69,12 +67,6 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
         this.configureOnClickRecyclerView();
         this.executeHttpRequestWithRetrofit();
         this.mContext = this.getContext();
-        //this.mTextView = findViewById(R.id.fragment_main_item_title);
-
-
-//        mProgressDialog = new ProgressDialog(this.getContext());
-//        mProgressDialog.setMessage("Loading....");
-//        mProgressDialog.show();
 
         return view;
     }
@@ -111,27 +103,12 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
             public void onItemClicked(int position) {
                 TopStoriesArticle topStoriesArticle = adapter.getArticle(position);
                 ArticleBeenRead.getInstance().setArticleHasBeenRead(topStoriesArticle.getUrl());
-                //adapter.notifyDataSetChanged();
                 adapter.notifyItemChanged(position);
-                //changeArticleColor(position, mTextView ,mContext);
-                //adapter.changeArticleColor(position,getContext()));
-                //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, WebViewActivity.class);
                 intent.putExtra("URL", topStoriesArticle.getUrl());
                 startActivity(intent);
             }
         });
-    }
-
-    public void onClickDeleteButton(int position) {
-        TopStoriesArticle topStoriesArticle = adapter.getArticle(position);
-        Toast.makeText(getContext(), "You are trying to delete article at position: "+position, Toast.LENGTH_SHORT).show();
-        adapter.deleteArticle(position);
-    }
-
-    public void changeArticleColor(int position, TextView textview, Context context) {
-        //adapter.changeArticleColor(position, textview, context);
-        textview.setTextColor(ContextCompat.getColor(context, R.color.orange));
     }
 
     // -----------------
@@ -196,7 +173,6 @@ public class TopStoriesFragment extends Fragment implements TopStoriesArticleAda
         this.mTopStoriesArticles.addAll(topStories.getResults());
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
-        //mProgressDialog.cancel();
 
     }
 

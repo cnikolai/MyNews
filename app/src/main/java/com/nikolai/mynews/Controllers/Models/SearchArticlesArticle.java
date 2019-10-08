@@ -14,10 +14,6 @@ public class SearchArticlesArticle {
         return Snippet;
     }
 
-    public void setSnippet(String snippet) {
-        Snippet = snippet;
-    }
-
     @SerializedName("snippet")
     @Expose
     private String Snippet;
@@ -39,16 +35,8 @@ public class SearchArticlesArticle {
         return multimedia;
     }
 
-    public void setMultimedia(List<URL> multimedia) {
-        this.multimedia = multimedia;
-    }
-
     public String getWeb_url() {
         return web_url;
-    }
-
-    public void setWeb_url(String web_url) {
-        this.web_url = web_url;
     }
 
 }

@@ -129,8 +129,6 @@ public class SearchActivity extends AppCompatActivity {
                 result.append("\nTechnology check:").append(chkTechnology.isChecked());
                 result.append("\nWorld check:").append(chkWorld.isChecked());
 
-                //Toast.makeText(SearchActivity.this, result.toString(),
-                       // Toast.LENGTH_LONG).show();
                 if (validateSearch()) {
                     startSearchFragment();
                 }
@@ -177,7 +175,6 @@ public class SearchActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(mBeginDateEditText.getText().toString())) {
             bundle.putString("mBeginDateEditText", reformatDate(mBeginDateEditText.getText().toString()));
             Log.d(TAG, "startSearchFragment: here5");
-            //bundle.putString("mBeginDateEditText", "19000101");
 
         }
         else {
@@ -187,7 +184,6 @@ public class SearchActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(mEndDateEditText.getText().toString())) {
             bundle.putString("mEndDateEditText", reformatDate(mEndDateEditText.getText().toString()));
             Log.d(TAG, "startSearchFragment: here6");
-            //bundle.putString("mEndDateEditText", "20500101");
 
         }
         else {

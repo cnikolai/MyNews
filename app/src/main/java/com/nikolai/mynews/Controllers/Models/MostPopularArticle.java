@@ -14,10 +14,6 @@ public class MostPopularArticle {
     @Expose
     private String section;
 
-//    @SerializedName("subsection")
-//    @Expose
-//    private String subsection;
-
     @SerializedName("title")
     @Expose
     private String title;
@@ -45,7 +41,6 @@ public class MostPopularArticle {
 
     public MostPopularArticle(String section, String title, String byline, String url, Date published_date, List<media_metadata> media) {
         this.section = section;
-//        this.subsection = subsection;
         this.title = title;
         this.byline = byline;
         this.url = url;
@@ -57,40 +52,12 @@ public class MostPopularArticle {
         return media;
     }
 
-    public void setMedia(List<media_metadata> media) {
-        this.media = media;
-    }
-
     public String getSection() {
         return section;
     }
 
-    public void setSection(String section) {
-        this.section = section;
-    }
-
-//    public String getSubsection() {
-//        return subsection;
-//    }
-//
-//    public void setSubsection(String subsection) {
-//        this.subsection = subsection;
-//    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getByline() {
-        return byline;
-    }
-
-    public void setByline(String byline) {
-        this.byline = byline;
     }
 
     public String getUrl() {
@@ -104,19 +71,5 @@ public class MostPopularArticle {
     public Date getPublished_date() {
         return published_date;
     }
-
-    public void setPublished_date(Date published_date) {
-        this.published_date = published_date;
-    }
-
-    public String getAbstract() {
-        return Abstract;
-    }
-
-    public void setAbstract(String anAbstract) {
-        Abstract = anAbstract;
-    }
-
-
 
 }

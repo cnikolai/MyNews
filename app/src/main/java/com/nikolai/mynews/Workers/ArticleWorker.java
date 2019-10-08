@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nikolai.mynews.Controllers.Activities.SearchActivity;
 import com.nikolai.mynews.Controllers.Models.TopStories;
@@ -15,10 +16,12 @@ import com.nikolai.mynews.Controllers.Utils.TopStoriesArticleService;
 import com.nikolai.mynews.R;
 import com.nikolai.mynews.SharedPreferencesWrapper;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -58,6 +61,10 @@ public class ArticleWorker extends Worker {
                     .firstOrError().blockingGet();
 
             Date lastUpdated = mTopStories.getLast_updated();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.US);
+            Log.d(TAG, "doWork: lastUpdated" + lastUpdated.toString());
+            String date = dateFormat.format(lastUpdated);
+            Log.d(TAG, "doWork: date - should be same" + date.toString());
             Date lastSeenUpdate = sharedPreferencesWrapper.getLastSeenUpdate(); //using shared prefs
 
             if (lastSeenUpdate.before(lastUpdated)) {
@@ -94,10 +101,6 @@ public class ArticleWorker extends Worker {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
-//
-//         //Add as notification
-//        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        manager.notify(0, builder.build());
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

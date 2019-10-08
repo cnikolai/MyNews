@@ -5,12 +5,6 @@
     android:layout_height="wrap_content"
     android:padding="20dip"
     >
-    <!--<TextView android:text="WebView" android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/textview"-->
-        <!--android:textSize="35dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true" />-->
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -65,35 +65,15 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Bundle arguments = getArguments();
         View view;
         Log.d(TAG, "onCreateView: inside SearchResultsFragment");
-        //Toast.makeText(getContext(), "Inside SearchResultsFragment", Toast.LENGTH_LONG).show();
-        //if (arguments != null && arguments.containsKey("edttext")) {
-            //Toast.makeText(getContext(), "Inside Fragment", Toast.LENGTH_SHORT).show();
-//            Boolean chkArts = getArguments().getBoolean("chkArts");
-//            Boolean chkBusiness = getArguments().getBoolean("chkBusiness");
-//            Boolean chkEntrepreneurs = getArguments().getBoolean("chkEntrepreneurs");
-//            Boolean chkPolitics = getArguments().getBoolean("chkPolitics");
-//            Boolean chkSports = getArguments().getBoolean("chkSports");
-//            Boolean chkTravel = getArguments().getBoolean("chkTravel");
-//            String mBeginDateEditText = getArguments().getString("mBeginDateEditText");
-//            String mEndDateEditText = getArguments().getString("mEndDateEditText");
-//            String searchqueryterm = getArguments().getString("searchqueryterm");
 
             view = inflater.inflate(R.layout.fragment_search_news_main, container, false);
             ButterKnife.bind(this, view);
             this.configureRecyclerView();
             this.configureSwipeRefreshLayout();
             this.configureOnClickRecyclerView();
-            //this.executeHttpRequestWithRetrofit();
             this.mContext = this.getContext();
-
-//            mProgressDialog = new ProgressDialog(this.getContext());
-//            mProgressDialog.setMessage("Loading....");
-//            mProgressDialog.show();
-
-            //view = inflater.inflate(R.layout.fragment_no_search_results, container, false);
 
             return view;
     }
@@ -133,8 +113,8 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
                     @Override
                     public void onItemClicked(int position) {
                         SearchArticlesArticle searchArticlesArticle = adapter.getArticle(position);
-                        ArticleBeenRead.getInstance().setArticleHasBeenRead(searchArticlesArticle.getMultimedia().get(0).getUrl());
-                        //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
+                        ArticleBeenRead.getInstance().setArticleHasBeenRead(searchArticlesArticle.getWeb_url());
+                        adapter.notifyItemChanged(position);
                         Intent intent = new Intent(mContext, WebViewActivity.class);
                         intent.putExtra("URL", searchArticlesArticle.getWeb_url());
                         startActivity(intent);
@@ -221,7 +201,6 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
         this.mSearchArticlesArticles.addAll(searchArticles.getResponse().getDocs());
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
-        //mProgressDialog.cancel();
     }
 
     public void setSearch(Bundle extras) {

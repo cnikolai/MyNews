@@ -31,5 +31,3 @@ public interface MostPopularArticleService {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
 }
-
-//https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json?api-key=fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J

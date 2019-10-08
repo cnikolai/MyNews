@@ -17,8 +17,4 @@ public class SearchArticleResponse {
     public List<SearchArticlesArticle> getDocs() {
         return docs;
     }
-
-    public void setDocs(List<SearchArticlesArticle> docs) {
-        this.docs = docs;
-    }
 }

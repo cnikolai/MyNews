@@ -21,10 +21,6 @@ public class TopStoriesArticle {
     @Expose
     private String title;
 
-    @SerializedName("abstract")
-    @Expose
-    private String Abstract;
-
     @SerializedName("byline")
     @Expose
     private String byline;
@@ -67,40 +63,16 @@ public class TopStoriesArticle {
         return multimedia;
     }
 
-    public void setMultimedia(List<URL> multimedia) {
-        this.multimedia = multimedia;
-    }
-
     public String getSection() {
         return section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
     }
 
     public String getSubsection() {
         return subsection;
     }
 
-    public void setSubsection(String subsection) {
-        this.subsection = subsection;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getByline() {
-        return byline;
-    }
-
-    public void setByline(String byline) {
-        this.byline = byline;
     }
 
     public String getUrl() {
@@ -114,19 +86,4 @@ public class TopStoriesArticle {
     public Date getPublished_date() {
         return published_date;
     }
-
-    public void setPublished_date(Date published_date) {
-        this.published_date = published_date;
-    }
-
-    public String getAbstract() {
-        return Abstract;
-    }
-
-    public void setAbstract(String anAbstract) {
-        Abstract = anAbstract;
-    }
-
-
-
 }

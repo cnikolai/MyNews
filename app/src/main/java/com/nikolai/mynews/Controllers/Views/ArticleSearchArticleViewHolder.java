@@ -43,16 +43,11 @@ public class ArticleSearchArticleViewHolder extends RecyclerView.ViewHolder impl
     }
 
     public void updateWithNewsArticle(SearchArticlesArticle articleSearchArticle, ArticleSearchArticleAdapter.Listener callback) {
-//        RequestOptions options = new Picas()
-//                .centerCrop()
-//                .placeholder(R.mipmap.ic_launcher_round)
-//                .error(R.mipmap.ic_launcher_round);
-        //check to see if the id is in the read id's or not and change the color
 
         if (articleSearchArticle.getMultimedia().size() == 0) {
             articleSearchArticle.getMultimedia().add(new URL("http://www.google.com"));
         }
-        if (ArticleBeenRead.getInstance().hasBeenRead(articleSearchArticle.getMultimedia().get(0).getUrl())) {
+        if (ArticleBeenRead.getInstance().hasBeenRead(articleSearchArticle.getWeb_url())) {
             this.textView.setTextColor(ContextCompat.getColor(context, R.color.orange));
         }
         else {
@@ -60,7 +55,6 @@ public class ArticleSearchArticleViewHolder extends RecyclerView.ViewHolder impl
         }
         this.textView.setText(articleSearchArticle.getSnippet());
             Picasso.get().load("https://static01.nyt.com/" + articleSearchArticle.getMultimedia().get(0).getUrl())
-//                .apply(options)
                     .error(R.mipmap.ic_launcher_round)
                 .into(imageView);
 

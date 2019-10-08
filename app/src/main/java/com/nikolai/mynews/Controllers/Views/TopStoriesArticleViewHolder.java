@@ -36,11 +36,9 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
     private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
 
     @BindView(R.id.fragment_main_item_title) TextView textView;
-    //@BindView(R.id.fragment_main_item_website) TextView texViewWebsite;
     @BindView(R.id.fragment_main_item_date) TextView textViewDate;
     @BindView(R.id.fragment_main_item_section) TextView textViewSection;
     @BindView(R.id.fragment_main_item_image) ImageView imageView;
-    //@BindView(R.id.fragment_main_item_delete) ImageButton imageButton;
 
     private WeakReference<TopStoriesArticleAdapter.Listener> callbackWeakRef;
     private final Context context;
@@ -53,10 +51,6 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
     }
 
     public void updateWithNewsArticle(TopStoriesArticle TopStoriesArticle, TopStoriesArticleAdapter.Listener callback) {
-//        RequestOptions options = new RequestOptions()
-//                .centerCrop()
-//                .placeholder(R.mipmap.ic_launcher_round)
-//                .error(R.mipmap.ic_launcher_round);
         String ending = "";
 
         if (TopStoriesArticle.getMultimedia().size() == 0) {
@@ -81,7 +75,6 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
         this.textViewSection.setText(temp);
         this.textViewSection.setTypeface(null, Typeface.BOLD);
         Picasso.get().load(TopStoriesArticle.getMultimedia().get(0).getUrl())
-//            .apply(options)
                 .error(R.mipmap.ic_launcher_round)
             .into(imageView);
 

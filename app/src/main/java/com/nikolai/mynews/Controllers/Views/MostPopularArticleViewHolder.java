@@ -34,11 +34,9 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
     private final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
 
     @BindView(R.id.fragment_most_popular_item_title) TextView textView;
-    //@BindView(R.id.fragment_most_popular_item_website) TextView texViewWebsite;
     @BindView(R.id.fragment_most_popular_item_date) TextView textViewDate;
     @BindView(R.id.fragment_most_popular_item_section) TextView textViewSection;
     @BindView(R.id.fragment_most_popular_item_image) ImageView imageView;
-    //@BindView(R.id.fragment_most_popular_item_delete) ImageButton imageButton;
 
     private WeakReference<MostPopularArticleAdapter.Listener> callbackWeakRef;
     private final Context context;
@@ -50,10 +48,6 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
     }
 
     public void updateWithNewsArticle(MostPopularArticle mostPopularArticle, MostPopularArticleAdapter.Listener callback) {
-//        RequestOptions options = new RequestOptions()
-//                .centerCrop()
-//                .placeholder(R.mipmap.ic_launcher_round)
-//                .error(R.mipmap.ic_launcher_round);
         String ending = "";
 
         //check to see if the id is in the read id's or not and change the color
@@ -71,7 +65,6 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
         this.textViewSection.setTypeface(null, Typeface.BOLD);
         Picasso.get().load(mostPopularArticle.getMedia().get(0).getMedia_metadata().get(0).getUrl())
                 .error(R.mipmap.ic_launcher_round)
-//            .apply(options)
             .into(imageView);
 
         this.callbackWeakRef = new WeakReference<MostPopularArticleAdapter.Listener>(callback);

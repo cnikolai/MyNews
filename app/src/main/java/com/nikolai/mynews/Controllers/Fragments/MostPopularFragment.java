@@ -52,7 +52,6 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: inside MostPopularFragment");
-        //Toast.makeText(getContext(), "Inside MostPopularFragment", Toast.LENGTH_LONG).show();
         View view = inflater.inflate(R.layout.fragment_most_popular_news_main, container, false);
         ButterKnife.bind(this, view);
         this.configureRecyclerView();
@@ -60,10 +59,6 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
         this.configureOnClickRecyclerView();
         this.executeHttpRequestWithRetrofit();
         this.mContext = this.getContext();
-
-//        mProgressDialog = new ProgressDialog(this.getContext());
-//        mProgressDialog.setMessage("Loading....");
-//        mProgressDialog.show();
 
         return view;
     }
@@ -106,7 +101,7 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
                     public void onItemClicked(int position) {
                         MostPopularArticle mostPopularArticle = adapter.getArticle(position);
                         ArticleBeenRead.getInstance().setArticleHasBeenRead(mostPopularArticle.getUrl());
-                        //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
+                        adapter.notifyItemChanged(position);
                         Intent intent = new Intent(mContext, WebViewActivity.class);
                         intent.putExtra("URL", mostPopularArticle.getUrl());
                         startActivity(intent);
@@ -179,8 +174,5 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
         this.mMostPopularArticles.addAll(mostPopular.getResults());
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
-        //mProgressDialog.cancel();
-        //if (mProgressDialog.isShowing())
-        //    mProgressDialog.dismiss();
     }
 }

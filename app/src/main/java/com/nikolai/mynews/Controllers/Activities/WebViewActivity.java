@@ -17,13 +17,6 @@ public class WebViewActivity extends AppCompatActivity {
         private WebView webview;
         private String url = "https://www.google.com";
 
-        public WebViewActivity(String url) {
-            this.url = url;
-        }
-
-        public WebViewActivity() {
-        }
-
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

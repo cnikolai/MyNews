@@ -29,10 +29,6 @@ public class TopStoriesArticleAdapter extends RecyclerView.Adapter<TopStoriesArt
     private TextView mTextView;
 
     public interface Listener {
-        //void onClickDeleteButton(int position);
-        //void changeArticleColor(int position, TextView textview, Context context);
-        //void addToReadQueue(int position);
-        //boolean hasBeenRead(int position);
     }
 
     // FOR COMMUNICATION
@@ -40,7 +36,6 @@ public class TopStoriesArticleAdapter extends RecyclerView.Adapter<TopStoriesArt
 
     // FOR DATA
     private final List<TopStoriesArticle> mTopStoriesArticles;
-    //private final List<Integer> mTopStoriesArticlesThatHaveBeenRead = new ArrayList<>();
     private final Picasso picasso;
 
     // CONSTRUCTOR
@@ -80,22 +75,5 @@ public class TopStoriesArticleAdapter extends RecyclerView.Adapter<TopStoriesArt
         Log.d(TAG, "deleteArticle: inside");
         this.mTopStoriesArticles.remove(position);
     }
-
-//    public void changeArticleColor(int position, TextView textview, Context context) {
-//        //get id of article to be changed
-//        int id = getPositionID(position);
-//        //add id of article to be changed to already read list
-//        mTopStoriesArticlesThatHaveBeenRead.add(id);
-//        //textview.setTextColor((ContextCompat.getColor(context, R.color.orange)));
-//    }
-
-//    public void addToReadQueue(String id) {
-//        ArticleBeenRead.getInstance().setArticleHasBeenRead(id);
-//    }
-
-//    public int getPositionID(int position){
-//        return this.mTopStoriesArticles.get(position).getId();
-//    }
-
 
 }
