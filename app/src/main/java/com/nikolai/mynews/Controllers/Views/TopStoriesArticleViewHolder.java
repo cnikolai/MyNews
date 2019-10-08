@@ -83,6 +83,7 @@ public class TopStoriesArticleViewHolder extends RecyclerView.ViewHolder impleme
         this.textViewSection.setTypeface(null, Typeface.BOLD);
         Picasso.get().load(TopStoriesArticle.getMultimedia().get(0).getUrl())
 //            .apply(options)
+                .error(R.mipmap.ic_launcher_round)
             .into(imageView);
 
         this.callbackWeakRef = new WeakReference<TopStoriesArticleAdapter.Listener>(callback);

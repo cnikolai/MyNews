@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.MostPopular;
 import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
@@ -104,6 +105,7 @@ public class MostPopularFragment extends Fragment implements MostPopularArticleA
                     @Override
                     public void onItemClicked(int position) {
                         MostPopularArticle mostPopularArticle = adapter.getArticle(position);
+                        ArticleBeenRead.getInstance().setArticleHasBeenRead(mostPopularArticle.getUrl());
                         //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(mContext, WebViewActivity.class);
                         intent.putExtra("URL", mostPopularArticle.getUrl());

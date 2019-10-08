@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Activities.WebViewActivity;
 import com.nikolai.mynews.Controllers.Models.SearchArticles;
 import com.nikolai.mynews.Controllers.Models.SearchArticlesArticle;
@@ -132,6 +133,7 @@ public class SearchResultsFragment extends Fragment implements ArticleSearchArti
                     @Override
                     public void onItemClicked(int position) {
                         SearchArticlesArticle searchArticlesArticle = adapter.getArticle(position);
+                        ArticleBeenRead.getInstance().setArticleHasBeenRead(searchArticlesArticle.getMultimedia().get(0).getUrl());
                         //Toast.makeText(getContext(), "You clicked on article : ", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(mContext, WebViewActivity.class);
                         intent.putExtra("URL", searchArticlesArticle.getWeb_url());

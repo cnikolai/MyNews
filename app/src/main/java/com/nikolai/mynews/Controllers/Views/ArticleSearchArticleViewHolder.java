@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nikolai.mynews.ArticleBeenRead;
+import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
 import com.nikolai.mynews.Controllers.Models.SearchArticlesArticle;
 import com.nikolai.mynews.Controllers.Models.URL;
 import com.nikolai.mynews.R;
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,14 +47,21 @@ public class ArticleSearchArticleViewHolder extends RecyclerView.ViewHolder impl
 //                .centerCrop()
 //                .placeholder(R.mipmap.ic_launcher_round)
 //                .error(R.mipmap.ic_launcher_round);
+        //check to see if the id is in the read id's or not and change the color
 
         if (articleSearchArticle.getMultimedia().size() == 0) {
             articleSearchArticle.getMultimedia().add(new URL("http://www.google.com"));
         }
-
+        if (ArticleBeenRead.getInstance().hasBeenRead(articleSearchArticle.getMultimedia().get(0).getUrl())) {
+            this.textView.setTextColor(ContextCompat.getColor(context, R.color.orange));
+        }
+        else {
+            this.textView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
+        }
         this.textView.setText(articleSearchArticle.getSnippet());
             Picasso.get().load("https://static01.nyt.com/" + articleSearchArticle.getMultimedia().get(0).getUrl())
 //                .apply(options)
+                    .error(R.mipmap.ic_launcher_round)
                 .into(imageView);
 
         this.callbackWeakRef = new WeakReference<ArticleSearchArticleAdapter.Listener>(callback);

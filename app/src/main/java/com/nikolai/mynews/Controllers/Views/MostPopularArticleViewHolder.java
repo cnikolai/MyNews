@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nikolai.mynews.ArticleBeenRead;
 import com.nikolai.mynews.Controllers.Models.MostPopularArticle;
+import com.nikolai.mynews.Controllers.Models.TopStoriesArticle;
 import com.nikolai.mynews.R;
 import com.squareup.picasso.Picasso;
 
@@ -15,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,21 +50,28 @@ public class MostPopularArticleViewHolder extends RecyclerView.ViewHolder implem
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithNewsArticle(MostPopularArticle MostPopularArticle, MostPopularArticleAdapter.Listener callback) {
+    public void updateWithNewsArticle(MostPopularArticle mostPopularArticle, MostPopularArticleAdapter.Listener callback) {
 //        RequestOptions options = new RequestOptions()
 //                .centerCrop()
 //                .placeholder(R.mipmap.ic_launcher_round)
 //                .error(R.mipmap.ic_launcher_round);
         String ending = "";
 
-
-        this.textView.setText(MostPopularArticle.getTitle());
-        String strDate = dateFormat.format(MostPopularArticle.getPublished_date());
+        //check to see if the id is in the read id's or not and change the color
+        if (ArticleBeenRead.getInstance().hasBeenRead(mostPopularArticle.getUrl())) {
+            this.textView.setTextColor(ContextCompat.getColor(context, R.color.orange));
+        }
+        else {
+            this.textView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
+        }
+        this.textView.setText(mostPopularArticle.getTitle());
+        String strDate = dateFormat.format(mostPopularArticle.getPublished_date());
         this.textViewDate.setText(strDate);
-        String temp = MostPopularArticle.getSection() + ending;
+        String temp = mostPopularArticle.getSection() + ending;
         this.textViewSection.setText(temp);
         this.textViewSection.setTypeface(null, Typeface.BOLD);
-        Picasso.get().load(MostPopularArticle.getMedia().get(0).getMedia_metadata().get(0).getUrl())
+        Picasso.get().load(mostPopularArticle.getMedia().get(0).getMedia_metadata().get(0).getUrl())
+                .error(R.mipmap.ic_launcher_round)
 //            .apply(options)
             .into(imageView);
 
