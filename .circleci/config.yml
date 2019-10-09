@@ -1,232 +1,342 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@cnikolai
+This repository has been archived by the owner. It is now read-only.
+
+14
+72
+
+    25
+
+ayltai/Newspaper Archived
+Code
+Issues 4
+Pull requests 0
+Actions
+Projects 1
+Security
+Insights
+Newspaper/.circleci/config.yml
+Alan Tai Fix FindBugs and Checkstyle configs; run quality checks in CircleCI 0eef862 on Apr 16, 2018
+318 lines (285 sloc) 9.36 KB
 version: 2
-reference:
 
-  ## Workspaces
-  workspace: &workspace
-    ~/flyve_mdm
-
-  ## Docker image configurations
-  android_config: &android_config
-    working_directory: *workspace
-    docker:
-      - image: circleci/android:api-28-node8-alpha
-    environment:
-      TERM: dumb
-      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+references:
 
   ## Cache
-  gradle_key: &gradle_key
-    jars-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
-  apk_certified_key: &apk_certified_key
-    apk-certified-v1-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-
-  restore_gradle_cache: &restore_gradle_cache
+  cache_key: &cache_key
+    key: cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "mobile/build.gradle" }}
+  restore_cache: &restore_cache
     restore_cache:
-      key: *gradle_key
-
-  restore_apk_certified_cache: &restore_apk_certified_cache
-    restore_cache:
-      key: *apk_certified_key
-
-  save_gradle_cache: &save_gradle_cache
+      <<: *cache_key
+  save_cache: &save_cache
     save_cache:
-      key: *gradle_key
+      <<: *cache_key
       paths:
         - ~/.gradle
         - ~/.m2
 
-  save_apk_certified_cache: &save_apk_certified_cache
-    save_cache:
-      key: *apk_certified_key
-      environment:
-        WORKSPACE: *workspace
+  ## Workspace
+
+  workspace: &workspace
+    ~/workspace
+  attach_debug_workspace: &attach_debug_workspace
+    attach_workspace:
+      at: *workspace
+  attach_release_workspace: &attach_release_workspace
+    attach_workspace:
+      at: *workspace
+  persist_debug_workspace: &persist_debug_workspace
+    persist_to_workspace:
+      root: *workspace
       paths:
-        - $WORKSPACE/app/build/outputs/apk/release/appCertified.apk
-      destination:
-        - $WORKSPACE/release/appCertified.apk
+        - mobile/build/intermediates
+        - mobile/build/outputs/androidTest-results
+        - mobile/build/outputs/apk
+        - mobile/build/outputs/code-coverage
+        - mobile/build/test-results
+  persist_release_workspace: &persist_release_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+        - mobile/build
+  attach_firebase_workspace: &attach_firebase_workspace
+    attach_workspace:
+      at: *workspace
+  persist_firebase_workspace: &persist_firebase_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+        - firebase
 
-  ## Dependencies
-  ruby_dependencies: &ruby_dependencies
-    run:
-      name: Download Ruby Dependencies
-      command: bundle check || bundle install --path vendor/bundle
+  ## Docker image configurations
 
-  android_dependencies: &android_dependencies
-    run:
-      name: Download Android Dependencies
-      command: ./gradlew androidDependencies
+  android_config: &android_config
+    working_directory: *workspace
+    docker:
+      - image: circleci/android:api-27-alpha
+    environment:
+      TERM: dumb
+      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+  gcloud_config: &gcloud_config
+    working_directory: *workspace
+    docker:
+      - image: google/cloud-sdk:latest
+    environment:
+      TERM: dumb
 
-  validate_running: &validate_running
+  ## Keys
+
+  # Android Key Store
+
+  export_android_key: &export_android_key
     run:
-      name: Validate running
-      command: source ci/scripts/validate_running.sh
+      name: Export Android key store environment variable
+      command: echo 'export ANDROID_KEY_STORE="$ANDROID_KEY_STORE"' >> $BASH_ENV
+  decode_android_key: &decode_android_key
+    run:
+      name: Decode Android key store
+      command: echo $ANDROID_KEY_STORE | base64 -di > key-store.jks
+
+  # Google Services
+
+  export_gservices_key: &export_gservices_key
+    run:
+      name: Export Google Services key environment variable
+      command: echo 'export GOOGLE_SERVICES_KEY="$GOOGLE_SERVICES_KEY"' >> $BASH_ENV
+  decode_gservices_key: &decode_gservices_key
+    run:
+      name: Decode Google Services key
+      command: echo $GOOGLE_SERVICES_KEY | base64 -di > mobile/google-services.json
+
+  # Google Cloud Service
+
+  export_gcloud_key: &export_gcloud_key
+    run:
+      name: Export Google Cloud Service key environment variable
+      command: echo 'export GCLOUD_SERVICE_KEY="$GCLOUD_SERVICE_KEY"' >> $BASH_ENV
+  decode_gcloud_key: &decode_gcloud_key
+    run:
+      name: Decode Google Cloud credentials
+      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
+
+  # Fabric
+
+  export_fabric_key: &export_fabric_key
+    run:
+      name: Export Fabric key
+      command: echo 'export FABRIC_KEY="$FABRIC_KEY"' >> $BASH_ENV
+  decode_fabric_key: &decode_fabric_key
+    run:
+      name: Decode Fabric key
+      command: echo $FABRIC_KEY | base64 -di > mobile/fabric.properties
 
 jobs:
-  # unit test
-  build:
-    <<: *android_config
-    steps:
-      - checkout
-      - *validate_running
-      - *restore_gradle_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
-      - run:
-          name: Run test
-          command: ./gradlew test
 
-  # Test Instrumentation with Android 4.1 JELLY_BEAN API 16
-  test_instrumentation:
-    <<: *android_config
-    steps:
-      - checkout
-      - *validate_running
-      - *restore_gradle_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
-      - run:
-          name: Create debug apk
-          command: ./gradlew assembleDebug assembleAndroidTest
-      - run:
-          name: Run Tests on Firebase test lab
-          command: source ci/scripts/google_cloud.sh
+  ## Build debug APK and instrumented test APK
 
-  check_transifex:
+  build_debug:
     <<: *android_config
     steps:
       - checkout
-      - *validate_running
-      - *restore_gradle_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
+      - *restore_cache
       - run:
-          name: Setup environment
-          command: source ci/scripts/setup_environment.sh
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *save_cache
+      - *export_gservices_key
+      - *decode_gservices_key
       - run:
-          name: Pull transifex
-          command: tx pull --all --force
-      - run:
-          name: Create debug apk
-          command: ./gradlew assemble
+          name: Gradle build (debug)
+          command: ./gradlew -PciBuild=true :mobile:assembleDebug :mobile:assembleAndroidTest
+      - *persist_debug_workspace
+      - store_artifacts:
+          path: mobile/build/outputs/apk/
+          destination: /apk/
 
-  deploy_alpha:
-    <<: *android_config
-    steps:
-      - checkout
-      - *validate_running
-      - *restore_gradle_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
-      - *restore_apk_certified_cache
-      - run:
-          name: Setup environment
-          command: source ci/scripts/setup_environment.sh
-      - run:
-          name: Update version code
-          command: ./gradlew updateVersionCode -P vVersion=$CIRCLE_BUILD_NUM
-      - run:
-          name: Generate certified apk
-          command: source ci/scripts/app_certification.sh
-      - run:
-          name: Deploy Alpha
-          command: source ci/scripts/deploy_alpha.sh
+  ## Build release APK
 
-  deploy_production:
+  build_release:
     <<: *android_config
     steps:
       - checkout
-      - *validate_running
-      - *restore_gradle_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
-      - *restore_apk_certified_cache
+      - *restore_cache
       - run:
-          name: Setup environment
-          command: source ci/scripts/setup_environment.sh
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *save_cache
+      - *export_android_key
+      - *decode_android_key
+      - *export_gservices_key
+      - *decode_gservices_key
+      - *export_fabric_key
+      - *decode_fabric_key
       - run:
-          name: Update version code
-          command: ./gradlew updateVersionCode -P vVersion=$CIRCLE_BUILD_NUM
-      - run:
-          name: Update version name
-          command: ./gradlew updateVersionName -P vName=$GIT_TAG
-      - run:
-          name: Generate certified apk
-          command: source ci/scripts/app_certification.sh
-      - run:
-          name: Deploy Production
-          command: source ci/scripts/deploy_production.sh
-      - run:
-          name: Create changelog, github release and push
-          command: source ci/scripts/release.sh
+          name: Gradle build (release)
+          command: ./gradlew -PciBuild=true :mobile:assembleRelease
+      - *persist_release_workspace
+      - store_artifacts:
+          path: mobile/build/outputs/apk/
+          destination: /apk/
+      - store_artifacts:
+          path: mobile/build/outputs/mapping/
+          destination: /mapping/
 
-  documentation:
+  ## Check code quality
+
+  check_quality:
     <<: *android_config
     steps:
       - checkout
-      - *validate_running
-      - *restore_gradle_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
+      - *restore_cache
       - run:
-          name: Setup environment
-          command: source ci/scripts/setup_environment.sh
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *save_cache
+      - *export_gservices_key
+      - *decode_gservices_key
       - run:
-          name: Generate Documentation
-          command: source ci/scripts/create_documentation.sh
+          name: Run Checkstyle
+          command: ./gradlew -PciBuild=true :mobile:customCheckstyle
+      - run:
+          name: Run FindBugs
+          command: ./gradlew -PciBuild=true :mobile:customFindBugs
+      - *persist_debug_workspace
+      - store_artifacts:
+          path: mobile/build/reports/
+          destination: /reports/
+
+  ## Run unit tests
+
+  test_unit:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_cache
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *save_cache
+      - *export_gservices_key
+      - *decode_gservices_key
+      - run:
+          name: Run unit tests
+          command: ./gradlew -PciBuild=true :mobile:testDebugUnitTest
+      - *persist_debug_workspace
+      - store_artifacts:
+          path: mobile/build/reports/
+          destination: /reports/
+      - store_test_results:
+          path: mobile/build/test-results/
+          destination: /test-results/
+
+  ## Run instrumented tests
+
+  test_instrumented:
+    <<: *gcloud_config
+    steps:
+      - *attach_debug_workspace
+      - *export_gcloud_key
+      - *decode_gcloud_key
+      - run:
+          name: Set Google Cloud target project
+          command: gcloud config set project newspaper-84169
+      - run:
+          name: Authenticate with Google Cloud
+          command: gcloud auth activate-service-account firebase-adminsdk-p9qvk@newspaper-84169.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
+      - run:
+          name: Run instrumented test on Firebase Test Lab
+          command: gcloud firebase test android run --type instrumentation --app mobile/build/outputs/apk/debug/mobile-debug.apk --test mobile/build/outputs/apk/androidTest/debug/mobile-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
+      - run:
+          name: Create directory to store test results
+          command: mkdir firebase
+      - run:
+          name: Download instrumented test results from Firebase Test Lab
+          command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-3udbiqpdyp0d0-miwcp7d69v80m | tail -1`*" /root/workspace/firebase/
+      - *persist_firebase_workspace
+      - store_artifacts:
+          path: firebase/
+          destination: /firebase/
+
+  ## Submit JaCoCo coverage report
+
+  report_coverage:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_cache
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *attach_debug_workspace
+      - *attach_firebase_workspace
+      - run:
+          name: Move Firebase coverage report
+          command: mkdir -p mobile/build/outputs/code-coverage/connected && cp firebase/sailfish-26-en_US-portrait/artifacts/coverage.ec mobile/build/outputs/code-coverage/connected/coverage.ec
+      - *export_gservices_key
+      - *decode_gservices_key
+      - run:
+          name: Generate JaCoCo report
+          command: ./gradlew -PciBuild=true :mobile:jacocoTestReport
+      - run:
+          name: Upload coverage report to Codacy
+          command: ./gradlew -PciBuild=true uploadCoverageToCodacy
+      - run:
+          name: Upload coverage report to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
+      - store_artifacts:
+          path: mobile/build/reports/
+          destination: /reports/
+
+  ## Deploy release APK to Fabric Beta
+
+  deploy:
+    <<: *android_config
+    steps:
+      - checkout
+      - *attach_release_workspace
+      - *restore_cache
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *export_fabric_key
+      - *decode_fabric_key
+      - run:
+          name: Deploy to Fabric Beta
+          command: ./gradlew -PciBuild=true :mobile:crashlyticsUploadDistributionRelease
 
 workflows:
   version: 2
-  build_test_and_deploy:
+  workflow:
     jobs:
-      - build:
-          context: org-global
-      - check_transifex:
-          context: org-global
+      - build_debug
+      - build_release
+      - check_quality:
           requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - master
-                - develop
-      - test_instrumentation:
-          context: org-global
+            - build_debug
+      - test_unit:
           requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - master
-      - deploy_alpha:
-          context: org-global
+            - build_debug
+      - test_instrumented:
           requires:
-            - test_instrumentation
-          filters:
-            branches:
-              only:
-                - develop
-      - deploy_production:
-          context: org-global
+            - build_debug
+      - report_coverage:
           requires:
-            - build
+            - test_unit
+            - test_instrumented
+      - deploy:
           filters:
             branches:
               only:
                 - master
-      - documentation:
-          context: org-global
           requires:
-            - build
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+            - build_release
+            - check_quality
+            - test_unit
+            - test_instrumented
