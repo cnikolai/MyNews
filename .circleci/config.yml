@@ -19,18 +19,18 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-      - run:
-          name: Run Android Lint
-          command: ./gradlew lintStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
-      - run:
-          name: Run PMD
-          command: ./gradlew pmd -PpreDexEnable=false -PdisablePreDex --console=plain
-      - run:
-          name: Run Checkstyle
-          command: ./gradlew checkstyle -PpreDexEnable=false -PdisablePreDex --console=plain
-      - run:
-          name: Run Findbugs
-          command: ./gradlew findbugs -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run Android Lint
+      #    command: ./gradlew lintStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run PMD
+      #    command: ./gradlew pmd -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run Checkstyle
+      #    command: ./gradlew checkstyle -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run Findbugs
+      #    command: ./gradlew findbugs -PpreDexEnable=false -PdisablePreDex --console=plain
       - run:
           name: Run Tests
           command: ./gradlew testStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
