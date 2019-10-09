@@ -50,9 +50,9 @@ jobs:
             command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
             #sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
             #sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
-      - emulator -avd circleci-android24 -no-window -gpu off:
-        background: true
-        parallel: true
+      #- emulator -avd circleci-android24 -no-window -gpu off:
+      #  background: true
+      #  parallel: true
       #- run:
       #      name: Launch emulator
       #      command: /opt/android-sdk-linux/emulator/emulator -avd test -no-audio -no-window -no-boot-anim  -accel on
@@ -114,3 +114,13 @@ experimental:
 #  - emulator -avd test -no-skin -no-audio -no-window &
 #  - android-wait-for-emulator
 #  - adb shell input keyevent 82 &
+test:
+  override:
+    # launch the default Android 24 emulator
+    - emulator -avd circleci-android24 -no-window -gpu off:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    # run tests against the emulator
+    - ./gradlew connectedAndroidTest:
+        timeout: 720
