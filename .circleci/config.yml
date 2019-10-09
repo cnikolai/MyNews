@@ -31,7 +31,7 @@ jobs:
       #- run:
       #    name: Run Findbugs
       #    command: ./gradlew findbugs -PpreDexEnable=false -PdisablePreDex --console=plain
-      -run:
+      - run:
           name: Accept Licenses
           command: yes | sdkmanager --licenses && sdkmanager --update
       - run:
