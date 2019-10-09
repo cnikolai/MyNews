@@ -52,7 +52,7 @@ jobs:
             #sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
       - run: 
         name: Launch Emulator
-        command: emulator -avd circleci-android24 -no-window -gpu off
+        command: emulator -avd circleci-android24 -no-window -gpu off:
           background: true
           parallel: true
       #- run:
