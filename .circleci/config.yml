@@ -1,43 +1,66 @@
+# Build configuration file for Circle CI
 version: 2
 jobs:
   build:
     working_directory: ~/code
     docker:
-      # Android the primary container
-      - image: circleci/android:api-28
-    environment:
-      JVM_OPTS: -Xmx3200m
+      - image: circleci/android:api-26-alpha
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+      - run:
+          name: Install Build Tools
+          command: echo y | sdkmanager "build-tools;26.0.2"
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-27;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
+          name: Run Android Lint
+          command: ./gradlew lintStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
       - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
-          background: true
+          name: Run PMD
+          command: ./gradlew pmd -PpreDexEnable=false -PdisablePreDex --console=plain
       - run:
-          name: Wait emulator
-          command: |
-            # wait for it to have booted
-            circle-android wait-for-boot
-            # unlock the emulator screen
-            sleep 30
-            adb shell input keyevent 82
+          name: Run Checkstyle
+          command: ./gradlew checkstyle -PpreDexEnable=false -PdisablePreDex --console=plain
       - run:
-          name: Run EspressoTests
-          command: ./gradlew connectedAndroidTest
+          name: Run Findbugs
+          command: ./gradlew findbugs -PpreDexEnable=false -PdisablePreDex --console=plain
+      - run:
+          name: Run Tests
+          command: ./gradlew testStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
       - store_artifacts:
           path: app/build/reports
           destination: reports
+      - store_artifacts:
+          path: app/build/outputs
+          destination: outputs
       - store_test_results:
           path: app/build/test-results
+      - deploy:
+          name: Labs
+          command: |
+            if [ "${CIRCLE_TAG}" != "" ]; then
+              ./gradlew clean assembleStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
+              sudo apt-get install build-essential
+              sudo apt-get install rubygems
+              sudo apt-get install ruby-dev
+              sudo gem install bundler
+              ./config/deploy.sh
+            fi
+deployment:
+  labs:
+    tag: /labs\/.*/
+
+experimental:
+  # this will enable chat notifications only for certain branches
+  notify:
+    branches:
+      only:
+        - labs
+        - dev
