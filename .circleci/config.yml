@@ -33,7 +33,7 @@ jobs:
       #    command: ./gradlew findbugs -PpreDexEnable=false -PdisablePreDex --console=plain
       - run:
           name: Run Tests
-          ./gradlew connectedAndroidTest -PpreDexEnable=false -PdisablePreDex --console=plain
+          command: ./gradlew connectedAndroidTest -PpreDexEnable=false -PdisablePreDex --console=plain
           #command: ./gradlew testStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
       - store_artifacts:
           path: app/build/reports
