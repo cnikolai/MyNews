@@ -51,10 +51,10 @@ jobs:
             #sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
             #sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
       - run: 
-        name: Launch Emulator
-        command: emulator -avd circleci-android24 -no-window -gpu off:
-          background: true
-          parallel: true
+          name: Launch Emulator
+          command: emulator -avd circleci-android24 -no-window -gpu off
+             background: true
+             parallel: true
       #- run:
       #      name: Launch emulator
       #      command: /opt/android-sdk-linux/emulator/emulator -avd test -no-audio -no-window -no-boot-anim  -accel on
