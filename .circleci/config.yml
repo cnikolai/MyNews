@@ -1,342 +1,116 @@
-
-Skip to content
-Pull requests
-Issues
-Marketplace
-Explore
-@cnikolai
-This repository has been archived by the owner. It is now read-only.
-
-14
-72
-
-    25
-
-ayltai/Newspaper Archived
-Code
-Issues 4
-Pull requests 0
-Actions
-Projects 1
-Security
-Insights
-Newspaper/.circleci/config.yml
-Alan Tai Fix FindBugs and Checkstyle configs; run quality checks in CircleCI 0eef862 on Apr 16, 2018
-318 lines (285 sloc) 9.36 KB
+# Build configuration file for Circle CI
 version: 2
-
-references:
-
-  ## Cache
-
-  cache_key: &cache_key
-    key: cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "mobile/build.gradle" }}
-  restore_cache: &restore_cache
-    restore_cache:
-      <<: *cache_key
-  save_cache: &save_cache
-    save_cache:
-      <<: *cache_key
-      paths:
-        - ~/.gradle
-        - ~/.m2
-
-  ## Workspace
-
-  workspace: &workspace
-    ~/workspace
-  attach_debug_workspace: &attach_debug_workspace
-    attach_workspace:
-      at: *workspace
-  attach_release_workspace: &attach_release_workspace
-    attach_workspace:
-      at: *workspace
-  persist_debug_workspace: &persist_debug_workspace
-    persist_to_workspace:
-      root: *workspace
-      paths:
-        - mobile/build/intermediates
-        - mobile/build/outputs/androidTest-results
-        - mobile/build/outputs/apk
-        - mobile/build/outputs/code-coverage
-        - mobile/build/test-results
-  persist_release_workspace: &persist_release_workspace
-    persist_to_workspace:
-      root: *workspace
-      paths:
-        - mobile/build
-  attach_firebase_workspace: &attach_firebase_workspace
-    attach_workspace:
-      at: *workspace
-  persist_firebase_workspace: &persist_firebase_workspace
-    persist_to_workspace:
-      root: *workspace
-      paths:
-        - firebase
-
-  ## Docker image configurations
-
-  android_config: &android_config
-    working_directory: *workspace
-    docker:
-      - image: circleci/android:api-27-alpha
-    environment:
-      TERM: dumb
-      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
-  gcloud_config: &gcloud_config
-    working_directory: *workspace
-    docker:
-      - image: google/cloud-sdk:latest
-    environment:
-      TERM: dumb
-
-  ## Keys
-
-  # Android Key Store
-
-  export_android_key: &export_android_key
-    run:
-      name: Export Android key store environment variable
-      command: echo 'export ANDROID_KEY_STORE="$ANDROID_KEY_STORE"' >> $BASH_ENV
-  decode_android_key: &decode_android_key
-    run:
-      name: Decode Android key store
-      command: echo $ANDROID_KEY_STORE | base64 -di > key-store.jks
-
-  # Google Services
-
-  export_gservices_key: &export_gservices_key
-    run:
-      name: Export Google Services key environment variable
-      command: echo 'export GOOGLE_SERVICES_KEY="$GOOGLE_SERVICES_KEY"' >> $BASH_ENV
-  decode_gservices_key: &decode_gservices_key
-    run:
-      name: Decode Google Services key
-      command: echo $GOOGLE_SERVICES_KEY | base64 -di > mobile/google-services.json
-
-  # Google Cloud Service
-
-  export_gcloud_key: &export_gcloud_key
-    run:
-      name: Export Google Cloud Service key environment variable
-      command: echo 'export GCLOUD_SERVICE_KEY="$GCLOUD_SERVICE_KEY"' >> $BASH_ENV
-  decode_gcloud_key: &decode_gcloud_key
-    run:
-      name: Decode Google Cloud credentials
-      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
-
-  # Fabric
-
-  export_fabric_key: &export_fabric_key
-    run:
-      name: Export Fabric key
-      command: echo 'export FABRIC_KEY="$FABRIC_KEY"' >> $BASH_ENV
-  decode_fabric_key: &decode_fabric_key
-    run:
-      name: Decode Fabric key
-      command: echo $FABRIC_KEY | base64 -di > mobile/fabric.properties
-
 jobs:
-
-  ## Build debug APK and instrumented test APK
-
-  build_debug:
-    <<: *android_config
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-28
     steps:
       - checkout
-      - *restore_cache
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
-          name: Download dependencies
+          name: Install Build Tools
+          command: echo y | sdkmanager "build-tools;26.0.2"
+      - run:
+          name: Download Dependencies
           command: ./gradlew androidDependencies
-      - *save_cache
-      - *export_gservices_key
-      - *decode_gservices_key
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+      #- run:
+      #    name: Run Android Lint
+      #    command: ./gradlew lintStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run PMD
+      #    command: ./gradlew pmd -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run Checkstyle
+      #    command: ./gradlew checkstyle -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Run Findbugs
+      #    command: ./gradlew findbugs -PpreDexEnable=false -PdisablePreDex --console=plain
+      #- run:
+      #    name: Accept Licenses
+      #    command: yes | sdkmanager --licenses && sdkmanager --update
+# steps:
+#      - run:
+#          name: Setup emulator
+#          command: sdkmanager "platform-tools" "platforms;android-22" "emulator" "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-22;default;armeabi-v7a"
+#      - run:
+#          name: Launch emulator
+#          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -gpu off
+#          background: true
+#      - run:
+#          name: Run Tests
+#          command: ./gradlew :demo:connectedAndroidTest      
       - run:
-          name: Gradle build (debug)
-          command: ./gradlew -PciBuild=true :mobile:assembleDebug :mobile:assembleAndroidTest
-      - *persist_debug_workspace
+            name: Setup emulator
+            command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
+            #sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
+            #sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
+      - emulator -avd circleci-android24 -no-window -gpu off:
+        background: true
+        parallel: true
+      #- run:
+      #      name: Launch emulator
+      #      command: /opt/android-sdk-linux/emulator/emulator -avd test -no-audio -no-window -no-boot-anim  -accel on
+            #export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
+            #command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-x86 -avd test -noaudio -no-boot-anim -no-window -accel on
+            #export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
+      #      background: true
+      #- run:
+      #    name: Setup emulator
+      #    command: sdkmanager "system-images;android-21;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-21;default;armeabi-v7a"
+      #- run:
+      #    name: Launch emulator
+      #    command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
+      #   background: true
+      - run:
+          name: Wait emulator
+          command: |
+            # wait for it to have booted
+            circle-android wait-for-boot
+            # unlock the emulator screen
+            sleep 30
+            adb shell input keyevent 82
+      - run:
+          name: Run Tests
+          command: ./gradlew connectedAndroidTest -PpreDexEnable=false -PdisablePreDex --console=plain
+          #command: ./gradlew testStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
       - store_artifacts:
-          path: mobile/build/outputs/apk/
-          destination: /apk/
-
-  ## Build release APK
-
-  build_release:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew androidDependencies
-      - *save_cache
-      - *export_android_key
-      - *decode_android_key
-      - *export_gservices_key
-      - *decode_gservices_key
-      - *export_fabric_key
-      - *decode_fabric_key
-      - run:
-          name: Gradle build (release)
-          command: ./gradlew -PciBuild=true :mobile:assembleRelease
-      - *persist_release_workspace
+          path: app/build/reports
+          destination: reports
       - store_artifacts:
-          path: mobile/build/outputs/apk/
-          destination: /apk/
-      - store_artifacts:
-          path: mobile/build/outputs/mapping/
-          destination: /mapping/
-
-  ## Check code quality
-
-  check_quality:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew androidDependencies
-      - *save_cache
-      - *export_gservices_key
-      - *decode_gservices_key
-      - run:
-          name: Run Checkstyle
-          command: ./gradlew -PciBuild=true :mobile:customCheckstyle
-      - run:
-          name: Run FindBugs
-          command: ./gradlew -PciBuild=true :mobile:customFindBugs
-      - *persist_debug_workspace
-      - store_artifacts:
-          path: mobile/build/reports/
-          destination: /reports/
-
-  ## Run unit tests
-
-  test_unit:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew androidDependencies
-      - *save_cache
-      - *export_gservices_key
-      - *decode_gservices_key
-      - run:
-          name: Run unit tests
-          command: ./gradlew -PciBuild=true :mobile:testDebugUnitTest
-      - *persist_debug_workspace
-      - store_artifacts:
-          path: mobile/build/reports/
-          destination: /reports/
+          path: app/build/outputs
+          destination: outputs
       - store_test_results:
-          path: mobile/build/test-results/
-          destination: /test-results/
-
-  ## Run instrumented tests
-
-  test_instrumented:
-    <<: *gcloud_config
-    steps:
-      - *attach_debug_workspace
-      - *export_gcloud_key
-      - *decode_gcloud_key
-      - run:
-          name: Set Google Cloud target project
-          command: gcloud config set project newspaper-84169
-      - run:
-          name: Authenticate with Google Cloud
-          command: gcloud auth activate-service-account firebase-adminsdk-p9qvk@newspaper-84169.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
-      - run:
-          name: Run instrumented test on Firebase Test Lab
-          command: gcloud firebase test android run --type instrumentation --app mobile/build/outputs/apk/debug/mobile-debug.apk --test mobile/build/outputs/apk/androidTest/debug/mobile-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
-      - run:
-          name: Create directory to store test results
-          command: mkdir firebase
-      - run:
-          name: Download instrumented test results from Firebase Test Lab
-          command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-3udbiqpdyp0d0-miwcp7d69v80m | tail -1`*" /root/workspace/firebase/
-      - *persist_firebase_workspace
-      - store_artifacts:
-          path: firebase/
-          destination: /firebase/
-
-  ## Submit JaCoCo coverage report
-
-  report_coverage:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew androidDependencies
-      - *attach_debug_workspace
-      - *attach_firebase_workspace
-      - run:
-          name: Move Firebase coverage report
-          command: mkdir -p mobile/build/outputs/code-coverage/connected && cp firebase/sailfish-26-en_US-portrait/artifacts/coverage.ec mobile/build/outputs/code-coverage/connected/coverage.ec
-      - *export_gservices_key
-      - *decode_gservices_key
-      - run:
-          name: Generate JaCoCo report
-          command: ./gradlew -PciBuild=true :mobile:jacocoTestReport
-      - run:
-          name: Upload coverage report to Codacy
-          command: ./gradlew -PciBuild=true uploadCoverageToCodacy
-      - run:
-          name: Upload coverage report to CodeCov
-          command: bash <(curl -s https://codecov.io/bash)
-      - store_artifacts:
-          path: mobile/build/reports/
-          destination: /reports/
-
-  ## Deploy release APK to Fabric Beta
-
-  deploy:
-    <<: *android_config
-    steps:
-      - checkout
-      - *attach_release_workspace
-      - *restore_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew androidDependencies
-      - *export_fabric_key
-      - *decode_fabric_key
-      - run:
-          name: Deploy to Fabric Beta
-          command: ./gradlew -PciBuild=true :mobile:crashlyticsUploadDistributionRelease
-
-workflows:
-  version: 2
-  workflow:
-    jobs:
-      - build_debug
-      - build_release
-      - check_quality:
-          requires:
-            - build_debug
-      - test_unit:
-          requires:
-            - build_debug
-      - test_instrumented:
-          requires:
-            - build_debug
-      - report_coverage:
-          requires:
-            - test_unit
-            - test_instrumented
+          path: app/build/test-results
       - deploy:
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - build_release
-            - check_quality
-            - test_unit
-            - test_instrumented
+          name: Labs
+          command: |
+            if [ "${CIRCLE_TAG}" != "" ]; then
+              ./gradlew clean assembleStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
+              sudo apt-get install build-essential
+              sudo apt-get install rubygems
+              sudo apt-get install ruby-dev
+              sudo gem install bundler
+              ./config/deploy.sh
+            fi
+deployment:
+  labs:
+    tag: /labs\/.*/
+
+experimental:
+  # this will enable chat notifications only for certain branches
+  notify:
+    branches:
+      only:
+        - labs
+        - dev
+#before_script:
+#  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+#  - emulator -avd test -no-skin -no-audio -no-window &
+#  - android-wait-for-emulator
+#  - adb shell input keyevent 82 &
