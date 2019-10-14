@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private void planWorker() {
         WorkManager mWorkManager;
         mWorkManager = WorkManager.getInstance(this.getApplicationContext());
-        mWorkManager.enqueue(new PeriodicWorkRequest.Builder(ArticleWorker.class, 1, TimeUnit.MINUTES).build());
+        mWorkManager.enqueue(new PeriodicWorkRequest.Builder(ArticleWorker.class, 1, TimeUnit.DAYS).build());
     }
 
     private void configureViewPagerAndTabs(){

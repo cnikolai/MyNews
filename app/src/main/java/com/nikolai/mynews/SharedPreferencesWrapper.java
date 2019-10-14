@@ -15,6 +15,10 @@ public class SharedPreferencesWrapper {
     private static final String IS_CHECKED = "is_checked";
     private final SharedPreferences sharedPref;
 
+    public SharedPreferencesWrapper(SharedPreferences sharedPreferences) {
+        sharedPref = sharedPreferences;
+    }
+
     public SharedPreferencesWrapper(Context context) {
         sharedPref = context.getSharedPreferences(
                 PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
