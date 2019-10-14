@@ -45,9 +45,9 @@ jobs:
 #      - run:
 #          name: Run Tests
 #          command: ./gradlew :demo:connectedAndroidTest      
-      - run:
-            name: Setup emulator
-            command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
+      #- run:
+       #     name: Setup emulator
+        #    command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
             #sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
             #sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
       #- run: 
@@ -55,14 +55,14 @@ jobs:
       #    command: emulator -avd circleci-android24 -no-window -gpu off
              #background: true
              #parallel: true
-      - run:
-            name: Launch emulator
+      #- run:
+      #      name: Launch emulator
       #      command: /opt/android-sdk-linux/emulator/emulator -avd test -no-audio -no-window -no-boot-anim  -accel on
             #export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
-            command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
+       #     command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
             #export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-x86 -avd test -noaudio -no-boot-anim -no-window -accel on
             #export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
-            background: true
+        #    background: true
       #- run:
       #    name: Setup emulator
       #    command: sdkmanager "system-images;android-21;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-21;default;armeabi-v7a"
@@ -70,17 +70,17 @@ jobs:
       #    name: Launch emulator
       #    command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
       #   background: true
-      - run:
-          name: Wait emulator
-          command: |
+     # - run:
+      #    name: Wait emulator
+       #   command: |
             # wait for it to have booted
-            circle-android wait-for-boot
+        #    circle-android wait-for-boot
             # unlock the emulator screen
-            sleep 30
-            adb shell input keyevent 82
-      - run:
-          name: Run Tests
-          command: ./gradlew connectedAndroidTest -PpreDexEnable=false -PdisablePreDex --console=plain
+         #   sleep 30
+          #  adb shell input keyevent 82
+      #- run:
+       #   name: Run Tests
+       #   command: ./gradlew connectedAndroidTest -PpreDexEnable=false -PdisablePreDex --console=plain
           #command: ./gradlew testStagingDebug -PpreDexEnable=false -PdisablePreDex --console=plain
       - store_artifacts:
           path: app/build/reports
