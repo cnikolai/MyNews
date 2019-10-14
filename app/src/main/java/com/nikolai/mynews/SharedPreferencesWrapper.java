@@ -11,8 +11,8 @@ import java.util.Locale;
 public class SharedPreferencesWrapper {
     public static final String TAG = SharedPreferencesWrapper.class.getSimpleName();
     private static final String PREFERENCE_FILE_KEY = "MyNews";
-    private static final String LAST_UPDATED = "lastUpdated";
-    private static final String IS_CHECKED = "is_checked";
+    static final String LAST_UPDATED = "lastUpdated";
+    static final String IS_CHECKED = "is_checked";
     private final SharedPreferences sharedPref;
 
     public SharedPreferencesWrapper(SharedPreferences sharedPreferences) {
@@ -32,7 +32,8 @@ public class SharedPreferencesWrapper {
 
     public void saveLastUpdate(Date lastUpdated) {
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(LAST_UPDATED, lastUpdated.toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd HH:mm:ss yyyy", Locale.US);
+        editor.putString(LAST_UPDATED, dateFormat.format(lastUpdated));
         editor.apply();
     }
 
@@ -48,7 +49,6 @@ public class SharedPreferencesWrapper {
         String new_now = now.replaceAll(" EDT", "");
 
         try {
-            //Log.d(TAG, "lastseenupdate: new now:" + new_now);
             Log.d(TAG, "lastseenupdate: now:" + now);
             date = dateFormat.parse(new_now);
             Log.d(TAG, "lastseenupdate: after parsing:" + date.toString());

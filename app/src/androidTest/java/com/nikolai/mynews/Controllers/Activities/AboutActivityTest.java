@@ -69,8 +69,6 @@ public class AboutActivityTest {
                                 1),
                         isDisplayed()));
         appCompatImageButton.perform(click());
-
-        //pressBack();
     }
 
     private static Matcher<View> childAtPosition(
