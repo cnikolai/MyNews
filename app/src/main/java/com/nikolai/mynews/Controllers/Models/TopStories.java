@@ -29,7 +29,12 @@ public class TopStories {
     @Expose
     private List<TopStoriesArticle> results;
 
-    public Date getLast_updated() {
+  public TopStories(Date last_updated, List<TopStoriesArticle> results) {
+    this.last_updated = last_updated;
+    this.results = results;
+  }
+
+  public Date getLast_updated() {
         return last_updated;
     }
 
