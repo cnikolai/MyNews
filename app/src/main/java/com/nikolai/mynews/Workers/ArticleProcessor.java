@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class ArticleProcessor {
 
     public static final String TAG = ArticleProcessor.class.getSimpleName();
-    private final static String API_KEY = "fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J";
+    public final static String API_KEY = "fd6A994KnuXHqfhl5WAHaTbnS3KxJe8J";
     private TopStoriesArticleService mTopStoriesArticleService;
     private SharedPreferencesWrapperInterface sharedPreferencesWrapper;
     private WorkerNotificationInterface mWorkerNotificationInterface;
