@@ -79,8 +79,8 @@ public class ArticleProcessorTest {
     @Test
     public void networkServerReturnsList() {
         //arrange
-        Date topStoriesDate = new Date(40000000);
-        Date sharedPrefDate = new Date(20000000);
+        Date topStoriesDate = new Date(20000000);
+        Date sharedPrefDate = new Date(40000000);
         when(mTopStoriesArticleService.getAllNewsArticles(any(),any())).thenReturn(Observable.just(new TopStories(topStoriesDate,new ArrayList<>())));
         when(sharedPreferencesWrapper.getLastSeenUpdate()).thenReturn(sharedPrefDate);
         //act

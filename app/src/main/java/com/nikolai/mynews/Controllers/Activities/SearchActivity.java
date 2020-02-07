@@ -18,7 +18,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.nikolai.mynews.Controllers.Fragments.SearchResultsFragment;
 import com.nikolai.mynews.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -150,7 +153,20 @@ public class SearchActivity extends AppCompatActivity {
             return false;
         }
         if (!TextUtils.isEmpty(mBeginDateEditText.getText().toString()) && !TextUtils.isEmpty(mEndDateEditText.getText().toString())) {
-            if (!validateStartandEndDate(Integer.parseInt(mBeginDateEditText.getText().toString()), Integer.parseInt(mEndDateEditText.getText().toString()))) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date start_date = null;
+            Date end_date = null;
+            try {
+                start_date = sdf.parse(mBeginDateEditText.getText().toString());
+                end_date = sdf.parse(mEndDateEditText.getText().toString());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            long startDate = start_date.getTime();
+            long endDate = end_date.getTime();
+            if (!validateStartandEndDate(startDate, endDate)) {
                 Toast.makeText(SearchActivity.this, "Please enter a start date that is before an end date",
                         Toast.LENGTH_SHORT).show();
                 return false;
@@ -218,7 +234,7 @@ public class SearchActivity extends AppCompatActivity {
         return unformattedDate[2] + unformattedDate[0] + unformattedDate[1];
     }
 
-    private boolean validateStartandEndDate(Integer startDate, Integer endDate) {
+    private boolean validateStartandEndDate(long startDate, long endDate) {
         Log.d(TAG, "validateStartandEndDate: "+ (startDate <= endDate));
         return startDate <= endDate;
     }
